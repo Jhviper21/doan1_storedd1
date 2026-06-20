@@ -81,7 +81,7 @@ function addToWeb(p, ele, returnString) {
 
 	// tách theo dấu ' ' vào gắn lại bằng dấu '-', code này giúp bỏ hết khoảng trắng và thay vào bằng dấu '-'.
 	// Tạo link tới chi tiết sản phẩm, chuyển tất cả ' ' thành '-'
-	var chitietSp = 'chitietsanpham.html?' + p.name.split(' ').join('-');
+	var chitietSp = getLinkChiTietSanPham(p.name);
 
 	// Cho mọi thứ vào tag <li>... </li>
 	var newLi =
@@ -98,7 +98,7 @@ function addToWeb(p, ele, returnString) {
 			` + (p.promo && p.promo.toWeb()) + `
 			<div class="tooltip">
 				<button class="themvaogio" onclick="themVaoGioHang('`+p.masp+`', '`+p.name+`'); return false;">
-					<span class="tooltiptext" style="font-size: 15px;">Thêm vào giỏ</span>
+					<span class="tooltiptext cart-tooltip">Thêm vào giỏ</span>
 					+
 				</button>
 			</div>

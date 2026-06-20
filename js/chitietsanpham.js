@@ -6,7 +6,7 @@ window.onload = function () {
     khoiTao();
 
     // thêm tags (từ khóa) vào khung tìm kiếm
-    var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+    var tags = ["Apple", "Samsung", "Xiaomi", "OPPO", "vivo"];
     for (var t of tags) addTags(t, "index.html?search=" + t, true);
 
     phanTich_URL_chiTietSanPham();
@@ -24,8 +24,9 @@ function khongTimThaySanPham() {
 }
 
 function phanTich_URL_chiTietSanPham() {
-    nameProduct = window.location.href.split('?')[1]; // lấy tên
+    nameProduct = window.location.search.slice(1); // lấy tên
     if(!nameProduct) return khongTimThaySanPham();
+    nameProduct = decodeURIComponent(nameProduct);
 
     // tách theo dấu '-' vào gắn lại bằng dấu ' ', code này giúp bỏ hết dấu '-' thay vào bằng khoảng trắng.
     // code này làm ngược lại so với lúc tạo href cho sản phẩm trong file classes.js
@@ -66,50 +67,54 @@ function phanTich_URL_chiTietSanPham() {
 
     // Cập nhật giá + label khuyến mãi
     var price = divChiTiet.getElementsByClassName('area_price')[0];
-    if (sanPhamHienTai.promo.name != 'giareonline') {
+    var promoHienTai = sanPhamHienTai.promo || {};
+    var detailHienTai = sanPhamHienTai.detail || {};
+
+    if (promoHienTai.name != 'giareonline') {
         price.innerHTML = `<strong>` + sanPhamHienTai.price + `₫</strong>`;
-        price.innerHTML += new Promo(sanPhamHienTai.promo.name, sanPhamHienTai.promo.value).toWeb();
+        price.innerHTML += new Promo(promoHienTai.name, promoHienTai.value).toWeb();
     } else {
-        document.getElementsByClassName('ship')[0].style.display = ''; // hiển thị 'giao hàng trong 1 giờ'
-        price.innerHTML = `<strong>` + sanPhamHienTai.promo.value + `&#8363;</strong>
+        document.getElementsByClassName('ship')[0].style.display = 'block'; // hiển thị 'giao hàng trong 1 giờ'
+        price.innerHTML = `<strong>` + promoHienTai.value + `&#8363;</strong>
 					        <span>` + sanPhamHienTai.price + `&#8363;</span>`;
     }
 
     // Cập nhật chi tiết khuyến mãi
-    document.getElementById('detailPromo').innerHTML = getDetailPromo(sanPhamHienTai);
+    var detailPromo = getDetailPromo(sanPhamHienTai);
+    if (detailPromo) {
+        document.getElementById('detailPromo').innerHTML = detailPromo;
+    } else {
+        document.getElementsByClassName('area_promo')[0].style.display = 'none';
+    }
 
     // Cập nhật thông số
     var info = document.getElementsByClassName('info')[0];
-    var s = addThongSo('Màn hình', sanPhamHienTai.detail.screen);
-    s += addThongSo('Hệ điều hành', sanPhamHienTai.detail.os);
-    s += addThongSo('Camara sau', sanPhamHienTai.detail.camara);
-    s += addThongSo('Camara trước', sanPhamHienTai.detail.camaraFront);
-    s += addThongSo('CPU', sanPhamHienTai.detail.cpu);
-    s += addThongSo('RAM', sanPhamHienTai.detail.ram);
-    s += addThongSo('Bộ nhớ trong', sanPhamHienTai.detail.rom);
-    s += addThongSo('Thẻ nhớ', sanPhamHienTai.detail.microUSB);
-    s += addThongSo('Dung lượng pin', sanPhamHienTai.detail.battery);
+    var s = addThongSo('Màn hình', detailHienTai.screen);
+    s += addThongSo('Hệ điều hành', detailHienTai.os);
+    s += addThongSo('Camera sau', detailHienTai.camara);
+    s += addThongSo('Camera trước', detailHienTai.camaraFront);
+    s += addThongSo('CPU', detailHienTai.cpu);
+    s += addThongSo('RAM', detailHienTai.ram);
+    s += addThongSo('Bộ nhớ trong', detailHienTai.rom);
+    s += addThongSo('Thẻ nhớ', detailHienTai.microUSB);
+    s += addThongSo('Dung lượng pin', detailHienTai.battery);
     info.innerHTML = s;
 
     // Cập nhật hình
     var hinh = divChiTiet.getElementsByClassName('picture')[0];
     hinh = hinh.getElementsByTagName('img')[0];
     hinh.src = sanPhamHienTai.img;
+    hinh.alt = sanPhamHienTai.name;
     document.getElementById('bigimg').src = sanPhamHienTai.img;
+    document.getElementById('bigimg').alt = sanPhamHienTai.name;
 
     // Hình nhỏ
-    addSmallImg("img/products/huawei-mate-20-pro-green-600x600.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-1-org.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-2-org.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-3-org.jpg");
-    addSmallImg("img/products/huawei-mate-20-pro-green-600x600.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-3-org.jpg");
-    addSmallImg("img/products/huawei-mate-20-pro-green-600x600.jpg");
+    addSmallImg(sanPhamHienTai.img);
 
     // Khởi động thư viện hỗ trợ banner - chỉ chạy sau khi tạo xong hình nhỏ
     var owl = $('.owl-carousel');
     owl.owlCarousel({
-        items: 5,
+        items: 1,
         center: true,
         smartSpeed: 450,
     });
@@ -117,33 +122,33 @@ function phanTich_URL_chiTietSanPham() {
 
 // Chi tiết khuyến mãi
 function getDetailPromo(sp) {
-    switch (sp.promo.name) {
+    var promo = sp.promo || {};
+    switch (promo.name) {
         case 'tragop':
-            var span = `<span style="font-weight: bold"> lãi suất ` + sp.promo.value + `% </span>`;
+            var span = `<span class="promo-highlight"> lãi suất ` + promo.value + `% </span>`;
             return `Khách hàng có thể mua trả góp sản phẩm với ` + span + `với thời hạn 6 tháng kể từ khi mua hàng.`;
 
         case 'giamgia':
-            var span = `<span style="font-weight: bold">` + sp.promo.value + `</span>`;
+            var span = `<span class="promo-highlight">` + promo.value + `</span>`;
             return `Khách hàng sẽ được giảm ` + span + `₫ khi tới mua trực tiếp tại cửa hàng`;
 
         case 'moiramat':
             return `Khách hàng sẽ được thử máy miễn phí tại cửa hàng. Có thể đổi trả lỗi trong vòng 2 tháng.`;
 
         case 'giareonline':
-            var del = stringToNum(sp.price) - stringToNum(sp.promo.value);
-            var span = `<span style="font-weight: bold">` + numToString(del) + `</span>`;
+            var del = stringToNum(sp.price) - stringToNum(promo.value);
+            var span = `<span class="promo-highlight">` + numToString(del) + `</span>`;
             return `Sản phẩm sẽ được giảm ` + span + `₫ khi mua hàng online bằng thẻ VPBank hoặc tin nhắn SMS`;
 
         default:
-            var span = `<span style="font-weight: bold">61 xe Wave Alpha</span>`;
-            return `Cơ hội trúng ` + span + ` khi trả góp Home Credit`;
+            return '';
     }
 }
 
 function addThongSo(ten, giatri) {
     return `<li>
                 <p>` + ten + `</p>
-                <div>` + giatri + `</div>
+                <div>` + (giatri || 'Đang cập nhật') + `</div>
             </li>`;
 }
 
@@ -172,6 +177,14 @@ function changepic(src) {
     document.getElementById("bigimg").src = src;
 }
 
+function themSanPhamHienTaiVaoGioHang() {
+    if (!maProduct || !nameProduct) {
+        addAlertBox('Không thể thêm sản phẩm này vào giỏ hàng.', '#ffb400', '#fff', 2500);
+        return;
+    }
+    themVaoGioHang(maProduct, nameProduct);
+}
+
 // Thêm sản phẩm vào các khung sản phẩm
 function addKhungSanPham(list_sanpham, tenKhung, color, ele) {
 	// convert color to code
@@ -182,7 +195,7 @@ function addKhungSanPham(list_sanpham, tenKhung, color, ele) {
 
 	// mở tag
 	var s = `<div class="khungSanPham" style="` + borderColor + `">
-				<h3 class="tenKhung" style="` + gradient + `">* ` + tenKhung + ` *</h3>
+				<h3 class="tenKhung" style="` + gradient + `">` + tenKhung + `</h3>
 				<div class="listSpTrongKhung flexContain">`;
 
 	for (var i = 0; i < list_sanpham.length; i++) {
@@ -191,6 +204,8 @@ function addKhungSanPham(list_sanpham, tenKhung, color, ele) {
 	}
 
 	// thêm khung vào contain-khung
+    s += `</div>
+        </div>`;
 	ele.innerHTML += s;
 }
 
@@ -211,9 +226,9 @@ function suggestion(){
 
         // Tiêu chí 2: các thông số kỹ thuật giống nhau
         let soLuongChiTietGiongNhau = 0;
-        for(let key in sanPham.detail) {
+        for(let key in (sanPham.detail || {})) {
             let value = sanPham.detail[key];
-            let currentValue = sanPhamHienTai.detail[key];
+            let currentValue = (sanPhamHienTai.detail || {})[key];
 
             if(value == currentValue) soLuongChiTietGiongNhau++;
         }
@@ -249,11 +264,9 @@ function suggestion(){
     // Lấy ra 10 sản phẩm đầu tiên
     .slice(0, 10);
 
-    console.log(sanPhamTuongTu)
-
     // ====== Hiển thị 5 sản phẩm lên web ====== 
     if(sanPhamTuongTu.length) {
         let div = document.getElementById('goiYSanPham');
-        addKhungSanPham(sanPhamTuongTu, 'Bạn có thể thích', ['#434aa8', '#ec1f1f'], div);
+        addKhungSanPham(sanPhamTuongTu, 'Bạn có thể thích', ['#2563eb', '#0f766e'], div);
     }
 }

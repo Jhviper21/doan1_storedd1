@@ -1,29 +1,108 @@
 .body-tintuc{
-	margin: 70px 50px 50px 90px;
-	width: 80%;
-	
-	
+	margin: 42px auto 80px;
+	width: min(980px, calc(100% - 28px));
+}
+.news-hero {
+	padding: 30px 34px;
+	margin-bottom: 18px;
+	color: #fff;
+	background: linear-gradient(135deg, #0f172a 0%, #2563eb 60%, #0f766e 100%);
+	border-radius: 22px;
+	box-shadow: 0 22px 54px rgba(15, 23, 42, .16);
+}
+.news-hero span {
+	display: inline-flex;
+	align-items: center;
+	min-height: 30px;
+	padding: 6px 12px;
+	margin-bottom: 12px;
+	color: #bfdbfe;
+	background: rgba(255, 255, 255, .1);
+	border: 1px solid rgba(255, 255, 255, .18);
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 800;
+	text-transform: uppercase;
+}
+.news-hero h1 {
+	font-size: 34px;
+	line-height: 1.2;
+}
+.news-hero p {
+	max-width: 620px;
+	margin-top: 10px;
+	color: #dbeafe;
+	font-size: 16px;
+	line-height: 1.65;
 }
 .tintuc-info{
-	height: 170px;
-	border-bottom: 1px solid #FCF;
-	margin-top: 5px;
+	min-height: 196px;
+	margin-top: 16px;
+	padding: 16px;
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 18px;
+	box-shadow: 0 12px 30px rgba(15, 23, 42, .06);
+	transition: .2s ease;
+	overflow: hidden;
 
 }
+.tintuc-info:hover{
+	border-color: #bfdbfe;
+	box-shadow: 0 18px 42px rgba(15, 23, 42, .12);
+	transform: translateY(-3px);
+}
 .tintuc-info img{
-	border: 1px solid gray;
+	border: 0;
 	float: left;
-	margin-right: 10px;
-	padding:5px;
-	border-radius: 5px;
-	height:148px;
-	width:224px;
+	margin-right: 20px;
+	padding:0;
+	border-radius: 14px;
+	height:164px;
+	width:278px;
+	object-fit: cover;
 }
 .tintuc-info a:hover{
-	color: #666;
+	color: #2563eb;
+}
+.tintuc-info h2{
+	font-size: 22px;
+	line-height: 1.35;
+	color: #1f2937;
+	padding-top: 6px;
+	transition: .2s ease;
+}
+.tintuc-info a:hover h2{
+	color: #2563eb;
 }
 .tintuc-info h5{
 	font-weight: 100;
 	font-style: italic;
-	color: gray;
+	color: #64748b;
+	margin-top: 8px;
+}
+
+@media (max-width: 700px) {
+	.news-hero {
+		padding: 24px;
+	}
+
+	.news-hero h1 {
+		font-size: 28px;
+	}
+
+	.tintuc-info {
+		min-height: 0;
+	}
+
+	.tintuc-info img {
+		float: none;
+		width: 100%;
+		height: auto;
+		margin: 0 0 14px;
+	}
+
+	.tintuc-info h2 {
+		font-size: 19px;
+	}
 }

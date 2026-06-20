@@ -9,7 +9,7 @@ window.onload = function () {
     autocomplete(document.getElementById('search-box'), list_products);
 
     // thêm tags (từ khóa) vào khung tìm kiếm
-    var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+    var tags = ["Apple", "Samsung", "Xiaomi", "OPPO", "vivo"];
     for (var t of tags) addTags(t, "index.html?search=" + t);
 
     currentUser = getCurrentUser();
@@ -28,7 +28,7 @@ window.onload = function () {
         addInfoUser(currentUser);
     
     } else {
-        var warning = `<h2 style="color: red; font-weight:bold; text-align:center; font-size: 2em; padding: 50px;">
+        var warning = `<h2 class="user-state user-state-error">
                             Bạn chưa đăng nhập !!
                         </h2>`;
         document.getElementsByClassName('infoUser')[0].innerHTML = warning;
@@ -51,7 +51,7 @@ function addInfoUser(user) {
         </tr>
         <tr>
             <td>Mật khẩu: </td>
-            <td style="text-align: center;"> 
+            <td class="centerText"> 
                 <i class="fa fa-pencil" id="butDoiMatKhau" onclick="openChangePass()"> Đổi mật khẩu</i> 
             </td>
             <td></td>
@@ -96,7 +96,7 @@ function addInfoUser(user) {
             <td> <i class="fa fa-pencil" onclick="changeInfo(this, 'email')"></i> </td>
         </tr>
         <tr>
-            <td colspan="3" style="padding:5px; border-top: 2px solid #ccc;"></td>
+            <td colspan="3" class="user-separator"></td>
         </tr>
         <tr>
             <td>Tổng tiền đã mua: </td>
@@ -169,7 +169,7 @@ function changeInfo(iTag, info) {
             // Đổi tên trong list đơn hàng
             if (!currentUser.donhang.length) {
                 document.getElementsByClassName('listDonHang')[0].innerHTML = `
-                    <h3 style="width=100%; padding: 50px; color: green; font-size: 2em; text-align: center"> 
+                    <h3 class="user-state user-state-success"> 
                         Xin chào ` + inp.value + `. Bạn chưa có đơn hàng nào.
                     </h3>`;
             }
@@ -214,14 +214,14 @@ function changeInfo(iTag, info) {
 function addTatCaDonHang(user) {
     if (!user) {
         document.getElementsByClassName('listDonHang')[0].innerHTML = `
-            <h3 style="width=100%; padding: 50px; color: red; font-size: 2em; text-align: center"> 
+            <h3 class="user-state user-state-error"> 
                 Bạn chưa đăng nhập !!
             </h3>`;
         return;
     }
     if (!user.donhang.length) {
         document.getElementsByClassName('listDonHang')[0].innerHTML = `
-            <h3 style="width=100%; padding: 50px; color: green; font-size: 2em; text-align: center"> 
+            <h3 class="user-state user-state-success"> 
                 Xin chào ` + currentUser.username + `. Bạn chưa có đơn hàng nào.
             </h3>`;
         return;
@@ -238,7 +238,7 @@ function addDonHang(dh) {
             <table class="listSanPham">
                 <tr> 
                     <th colspan="6">
-                        <h3 style="text-align:center;"> Đơn hàng ngày: ` + new Date(dh.ngaymua).toLocaleString() + `</h3> 
+                        <h3 class="order-title"> Đơn hàng ngày: ` + new Date(dh.ngaymua).toLocaleString() + `</h3> 
                     </th>
                 </tr>
                 <tr>
@@ -255,6 +255,7 @@ function addDonHang(dh) {
         var masp = dh.sp[i].ma;
         var soluongSp = dh.sp[i].soluong;
         var p = timKiemTheoMa(list_products, masp);
+        if (!p) continue;
         var price = (p.promo.name == 'giareonline' ? p.promo.value : p.price);
         var thoigian = new Date(dh.sp[i].date).toLocaleString();
         var thanhtien = stringToNum(price) * soluongSp;
@@ -263,7 +264,7 @@ function addDonHang(dh) {
                 <tr>
                     <td>` + (i + 1) + `</td>
                     <td class="noPadding imgHide">
-                        <a target="_blank" href="chitietsanpham.html?` + p.name.split(' ').join('-') + `" title="Xem chi tiết">
+                        <a target="_blank" href="` + getLinkChiTietSanPham(p.name) + `" title="Xem chi tiết">
                             ` + p.name + `
                             <img src="` + p.img + `">
                         </a>
@@ -273,7 +274,7 @@ function addDonHang(dh) {
                          ` + soluongSp + `
                     </td>
                     <td class="alignRight">` + numToString(thanhtien) + ` ₫</td>
-                    <td style="text-align: center" >` + thoigian + `</td>
+                    <td class="centerText">` + thoigian + `</td>
                 </tr>
             `;
         totalPrice += thanhtien;
@@ -282,13 +283,20 @@ function addDonHang(dh) {
     tongTienTatCaDonHang += totalPrice;
 
     s += `
-                <tr style="font-weight:bold; text-align:center; height: 4em;">
+                <tr class="cart-total-row">
                     <td colspan="4">TỔNG TIỀN: </td>
                     <td class="alignRight">` + numToString(totalPrice) + ` ₫</td>
-                    <td > ` + dh.tinhTrang + ` </td>
+                    <td>` + userOrderStatusBadge(dh.tinhTrang) + `</td>
                 </tr>
             </table>
             <hr>
         `;
     div.innerHTML += s;
+}
+
+function userOrderStatusBadge(status) {
+    var className = 'user-order-waiting';
+    if (status === 'Đã giao hàng') className = 'user-order-success';
+    if (status === 'Đã hủy') className = 'user-order-danger';
+    return '<span class="user-order-status ' + className + '">' + status + '</span>';
 }

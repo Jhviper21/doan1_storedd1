@@ -2,58 +2,120 @@
     display: none;
 } */
 
+.user-hero {
+    margin: 34px auto 18px;
+    padding: 32px 36px;
+    color: #fff;
+    background: linear-gradient(135deg, #0f172a 0%, #2563eb 58%, #0f766e 100%);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, .18);
+}
+
+.user-hero span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #bfdbfe;
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.user-hero h1 {
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.user-hero p {
+    max-width: 680px;
+    margin-top: 10px;
+    color: #dbeafe;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
 .infoUser table {
-    border-collapse: collapse;
-    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 34px auto;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+    overflow: hidden;
+    min-width: 560px;
 }
 
 .infoUser table th {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
-    padding: 10px 5px;
+    padding: 18px 22px;
+    background: #0f172a;
+    color: #fff;
 }
 
 .infoUser table td {
-    font-size: 18px;
+    font-size: 16px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #334155;
 }
 .infoUser table td:first-child {
     font-weight: bold;
     text-align: right;
+    color: #1f2937;
 }
 
 .infoUser input {
-    font-size: 20px;
-    border-radius: 5px;
+    font-size: 16px;
+    border-radius: 10px;
     text-align: center;
-    transition-duration: .15s;
-    border: 1px solid #aaa;
+    transition: .15s ease;
+    border: 1px solid #dbe3ec;
+    padding: 9px 12px;
+    color: #1f2937;
 }
 
 .infoUser input:read-only {
     border: 1px solid transparent;
+    background: transparent;
+}
+
+.infoUser input:not(:read-only) {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    background: #fff;
 }
 
 /* Nút sửa thông tin */
 .infoUser .fa-pencil {
     text-align: center;
-    border-radius: 5px;
+    border-radius: 999px;
     font-size: 1em;
-    padding: 7px;
-    transition-duration: .2s;
+    padding: 8px 12px;
+    transition: .2s ease;
     cursor: pointer;
     min-width: 70px;
+    color: #2563eb;
+    background: #eff6ff;
 }
 
 .infoUser .fa-pencil:hover {
-    background-color: #ccc;
-    color: #444;
+    background-color: #2563eb;
+    color: #fff;
 }
 
 /* Thay đổi mật khẩu */
 #khungDoiMatKhau {
     padding: 0;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #e5e7eb;
+    border-top: 1px solid #e5e7eb;
+    background: #f8fafc;
 }
 #khungDoiMatKhau tr td {
     padding: 0;
@@ -76,11 +138,109 @@
 
 #khungDoiMatKhau button {
     width: 100%;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 9px 12px;
+    border-radius: 999px;
     border: none;
     cursor: pointer;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 700;
 }
 #khungDoiMatKhau button:hover {
-    background-color: rgb(120, 212, 120);
+    background-color: #1d4ed8;
+}
+
+.listDonHang {
+    margin-bottom: 70px;
+}
+
+.listDonHang > hr {
+    border: 0;
+    margin: 24px 0;
+}
+
+.user-state {
+    width: 100%;
+    padding: 50px;
+    font-size: 2em;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+    margin: 34px auto;
+}
+
+.user-state-error {
+    color: #dc2626;
+}
+
+.user-state-success {
+    color: #16a34a;
+}
+
+.user-separator {
+    padding: 5px;
+    border-top: 2px solid #e5e7eb;
+}
+
+.order-title {
+    text-align: center;
+    color: #0f172a;
+    font-size: 20px;
+}
+
+.user-order-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.user-order-waiting {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.user-order-success {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.user-order-danger {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+@media (max-width: 1023px) {
+    .infoUser {
+        overflow-x: auto;
+    }
+
+    .infoUser table {
+        min-width: 520px;
+    }
+
+    .user-state {
+        padding: 32px 18px;
+        font-size: 1.4em;
+    }
+
+    .user-hero {
+        margin-top: 24px;
+        padding: 26px;
+    }
+
+    .user-hero h1 {
+        font-size: 28px;
+    }
+
+    .listDonHang {
+        overflow-x: auto;
+    }
 }

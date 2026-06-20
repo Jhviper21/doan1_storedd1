@@ -1,0 +1,144 @@
+.product-json-tool {
+	width: min(1080px, 100%);
+	margin: 42px auto 90px;
+	padding: 0 18px;
+}
+
+.tool-header {
+	background: linear-gradient(135deg, #2563eb 0%, #14b8a6 100%);
+	color: #fff;
+	padding: 28px 32px;
+	border-radius: 18px 18px 0 0;
+	box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+}
+
+.tool-header h1 {
+	font-size: 30px;
+	margin-bottom: 8px;
+}
+
+.tool-header p {
+	color: #e0f2fe;
+	font-size: 16px;
+}
+
+.tool-table {
+	width: 100%;
+	padding: 18px;
+	border: 1px solid #e5e7eb;
+	border-top: 0;
+	border-radius: 0 0 18px 18px;
+	margin: 0 auto;
+	background: #fff;
+	box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+}
+
+.tool-table td {
+	padding: 8px;
+	vertical-align: top;
+}
+
+.form-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0 8px;
+}
+
+.form-table td:first-child {
+	width: 190px;
+	color: #334155;
+	font-weight: 700;
+}
+
+.form-table th {
+	padding: 16px 10px 8px;
+	text-align: left;
+	color: #1e3a8a;
+	border-top: 1px solid #e5e7eb;
+	font-size: 18px;
+}
+
+.product-json-tool input,
+.product-json-tool select,
+.product-json-tool textarea {
+	width: 100%;
+	padding: 11px 12px;
+	border: 1px solid #dbe3ec;
+	border-radius: 10px;
+	background: #f8fafc;
+	color: #1f2937;
+	font-size: 16px;
+	transition: .2s ease;
+}
+
+.product-json-tool input:focus,
+.product-json-tool select:focus,
+.product-json-tool textarea:focus {
+	border-color: #2563eb;
+	box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+.product-json-tool button {
+	display: inline-block;
+	border-radius: 999px;
+	margin: 10px auto;
+	font-size: 17px;
+	font-weight: 700;
+	padding: 12px 18px;
+	border: none;
+	cursor: pointer;
+	background: #2563eb;
+	color: #fff;
+	transition: .2s ease;
+}
+
+.product-json-tool button:hover {
+	background: #1d4ed8;
+	transform: translateY(-2px);
+}
+
+.product-json-tool .secondary-button {
+	background: #e2e8f0;
+	color: #334155;
+	margin-left: 8px;
+}
+
+.product-json-tool .secondary-button:hover {
+	background: #cbd5e1;
+}
+
+.product-json-tool textarea {
+	min-height: 260px;
+	font-family: Consolas, Monaco, monospace;
+	line-height: 1.5;
+	resize: vertical;
+}
+
+.product-json-tool .homeproduct {
+	min-height: 360px;
+	align-items: flex-start;
+}
+
+.product-json-tool .homeproduct li {
+	width: 250px;
+}
+
+@media (max-width: 1023px) {
+	.product-json-tool {
+		margin: 28px auto 70px;
+		padding: 0 12px;
+	}
+
+	.tool-table,
+	.tool-table tbody,
+	.tool-table tr,
+	.tool-table td {
+		display: block;
+		width: 100%;
+	}
+
+	.form-table td:first-child {
+		width: 100%;
+		padding-bottom: 0;
+	}
+}

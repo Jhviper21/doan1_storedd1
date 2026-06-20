@@ -1,20 +1,111 @@
 /* Phải thêm .chitietSanpham để không trùng với h1 của taikhoan */
+.chitietSanpham {
+    width: min(1180px, calc(100% - 28px));
+    margin: 26px auto 100px;
+}
+
+#productNotFound {
+    min-height: 50vh;
+    text-align: center;
+    margin: 50px auto;
+    display: none;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+    padding: 44px;
+}
+
+#productNotFound i {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    line-height: 64px;
+    margin-bottom: 14px;
+    border-radius: 18px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 30px;
+}
+
+#productNotFound h1 {
+    color: #dc2626;
+    margin-bottom: 12px;
+}
+
+#productNotFound p {
+    max-width: 460px;
+    margin: 0 auto 18px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+#productNotFound a {
+    display: inline-block;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+#productNotFound a:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
 .chitietSanpham h1 {
     display: block;
-    margin: 0 0 0 10px;
+    margin: 0 0 0 4px;
     float: left;
     overflow: hidden;
     /*khi k đủ chứa text thì phần text bị dư sẽ giấu đi*/
-    font-size: 24px;
-    color: #333;
-    line-height: 40px;
+    font-size: 32px;
+    color: #1f2937;
+    line-height: 42px;
     /*tăng khoảng cách dòng*/
 }
 
 .rating {
     float: left;
-    margin-left: 15px;
-    line-height: 40px;
+    margin: 2px 0 0 18px;
+    line-height: 42px;
+    color: #64748b;
+}
+
+.detail-trust-row {
+    clear: both;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    padding-top: 18px;
+}
+
+.detail-trust-row div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    color: #334155;
+    font-weight: 700;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, .06);
+}
+
+.detail-trust-row i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #2563eb;
+    background: #eff6ff;
+    border-radius: 10px;
+    flex: 0 0 auto;
 }
 
 .fa-star,
@@ -23,11 +114,17 @@
 }
 
 .rowdetail {
-    display: block;
-    border-top: 1px solid #e5e5e5;
-    padding: 15px 0;
-    margin-top: 5px;
+    display: grid;
+    grid-template-columns: 32% 34% 34%;
+    align-items: start;
+    gap: 18px;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    margin-top: 14px;
     clear: both;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 22px 54px rgba(15, 23, 42, .1);
 }
 
 .overlaycertainimg {
@@ -39,7 +136,7 @@
     /*Cho nằm lên trên màn hình*/
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, .95);
+    background: rgba(15, 23, 42, .96);
     transform: scale(0);
     transition: .2s ease;
 }
@@ -62,7 +159,7 @@
 
 .overlaycertainimg .close:hover {
     /* color: #fff; */
-    background-color: #f33;
+    background-color: #ef4444;
     border-radius: 50%;
 }
 
@@ -77,6 +174,9 @@
 .overlaycertainimg-content img.bigimg {
     /*hình lớn ở certainimg*/
     height: 540px;
+    max-width: 88vw;
+    object-fit: contain;
+    border-radius: 16px;
     display: block;
     margin: auto;
 }
@@ -106,9 +206,7 @@
 }
 
 .picture {
-    float: left;
     overflow: hidden;
-    width: 33%;
     position: relative;
     /*định vị trí phụ thuộc vào thành phần bao ngoài*/
     display: block;
@@ -121,28 +219,41 @@
     cursor: pointer;
     /*thay đổi trỏ chuột đi đưa vào*/
     max-width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    padding: 24px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    transition: .2s ease;
+}
+
+.picture img:hover {
+    transform: scale(1.02);
 }
 
 .price_sale {
-    float: left;
     position: relative;
-    width: 33%;
     display: block;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 14px 0;
 }
 
 .area_price {
     display: block;
     overflow: hidden;
     line-height: 20px;
-    padding: 0 10px 10px;
+    padding: 0 16px 14px;
 }
 
 .area_price strong {
     display: inline-block;
     /*hối nội tuyến*/
     overflow: hidden;
-    font-size: 24px;
-    color: #e10c00;
+    font-size: 28px;
+    color: #dc2626;
     vertical-align: middle;
     /*thành phần sẽ đc canh giữa theo thành phần bao ngoài*/
     margin-right: 10px;
@@ -155,7 +266,7 @@
     font-size: 20px;
     text-decoration: line-through;
     margin-left: 5px;
-    color: #222;
+    color: #64748b;
 }
 
 .area_price label {
@@ -165,9 +276,10 @@
     color: #fff;
     font-weight: 600;
     /*hiển thị chữ đậm hay chữ thường*/
-    border-radius: 3px;
-    padding: 0 5px 0 8px;
-    height: 18px;
+    border-radius: 999px;
+    padding: 3px 9px;
+    height: auto;
+    line-height: 1.3;
 }
 
 .area_price label.tragop {
@@ -194,10 +306,11 @@
 }
 
 .ship {
-    background-color: #ecf7ed;
-    border-radius: 3px;
-    border: 1px solid #c4ddc8;
-    margin: 5px 10px 10px;
+    display: none;
+    background-color: #ecfdf5;
+    border-radius: 12px;
+    border: 1px solid #bbf7d0;
+    margin: 5px 14px 10px;
     padding: 0 10px;
     font-weight: bold;
     line-height: 30px;
@@ -211,22 +324,22 @@
 }
 
 .ship div {
-    border-left: 1px solid #c4ddc8;
+    border-left: 1px solid #bbf7d0;
     display: block;
     line-height: 30px;
     padding-left: 10px;
     margin-left: 28px;
-    color: #30a43b;
+    color: #15803d;
     max-width: 1200px;
 }
 
 .area_promo {
-    border: 1px solid #ddd;
+    border: 1px solid #dbe3ec;
     display: block;
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 14px;
     position: relative;
-    margin: 5px 10px 12px;
+    margin: 5px 14px 12px;
     padding-bottom: 10px;
 }
 
@@ -234,6 +347,7 @@
     display: block;
     overflow: hidden;
     font-size: 15px;
+    color: #1f2937;
     padding: 15px 15px 10px 15px;
     text-transform: uppercase;
     /*Viết thành chữ hoa*/
@@ -246,6 +360,11 @@
     padding: 0 15px 5px 40px;
 }
 
+.promo-highlight {
+    font-weight: 800;
+    color: #1f2937;
+}
+
 .promo img {
     width: 14px;
     height: 14px;
@@ -256,25 +375,31 @@
 .area_order {
     display: block;
     overflow: hidden;
-    margin: 10px;
+    margin: 12px 14px;
 }
 
 .area_order .buy_now {
+    width: 100%;
+    border: 0;
     display: block;
     overflow: hidden;
-    padding: 7px 0;
-    border-radius: 4px;
+    padding: 14px 12px;
+    border-radius: 14px;
     font-size: 16px;
     line-height: normal;
     color: #fff;
     text-align: center;
-    background: -webkit-linear-gradient(top, #f59000, #fd6e1d);
+    background: linear-gradient(135deg, #2563eb 0%, #14b8a6 100%);
     text-decoration: none;
     cursor: pointer;
+    transition: .2s ease;
+    font-weight: 700;
+    box-shadow: 0 14px 26px rgba(37, 99, 235, .24);
 }
 
 .area_order .buy_now:hover {
-    background: -webkit-linear-gradient(top, #fd6e1d, #f59000);
+    filter: brightness(.95);
+    transform: translateY(-2px);
 }
 
 .area_order .buy_now p {
@@ -286,10 +411,10 @@
 .policy {
     display: block;
     overflow: hidden;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    border: 1px solid #dbe3ec;
+    border-radius: 14px;
     padding-top: 10px;
-    margin: 0 10px 10px 10px;
+    margin: 0 14px 4px 14px;
     padding-bottom: 5px;
 }
 
@@ -315,7 +440,7 @@
 
 .policy div p {
     margin: 0 0 0 28px;
-    color: #288ad6;
+    color: #334155;
 }
 
 .policy div.last {
@@ -323,17 +448,19 @@
 }
 
 .info_product {
-    width: 33%;
-    border: 1px solid #ddd;
-    float: left;
-    border-radius: 3px;
+    border: 1px solid #dbe3ec;
+    border-radius: 18px;
     display: block;
+    overflow: hidden;
+    background: #fff;
 }
 
 .info_product h2 {
     text-align: center;
     font-size: 20px;
-    padding: 10px;
+    padding: 16px 10px;
+    background: #0f172a;
+    color: #fff;
 }
 
 .info {
@@ -346,9 +473,9 @@
 .info li {
     list-style: none;
     display: table;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #e5e7eb;
     width: 100%;
-    padding: 5px 0;
+    padding: 8px 0;
 }
 
 .info li p {
@@ -356,12 +483,41 @@
     float: left;
     margin: 5px 0;
     width: 40%;
-    color: #666;
+    color: #64748b;
+    font-weight: 700;
 }
 
 .info li div {
     width: 60%;
     float: left;
     margin: 5px 0;
-    color: #333;
+    color: #1f2937;
+    line-height: 1.45;
+}
+
+@media (max-width: 1023px) {
+    .chitietSanpham h1,
+    .rating {
+        float: none;
+        margin-left: 0;
+    }
+
+    .rowdetail {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-trust-row {
+        grid-template-columns: 1fr;
+    }
+
+    .price_sale,
+    .info_product {
+        margin-top: 18px;
+    }
+
+    .overlaycertainimg-content img.bigimg {
+        height: auto;
+        max-height: 62vh;
+        margin-top: 70px;
+    }
 }

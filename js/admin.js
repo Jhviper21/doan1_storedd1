@@ -2,7 +2,7 @@ var TONGTIEN = 0;
 
 window.onload = function () {
     // get data từ localstorage
-    list_products = getListProducts() || list_products;
+    list_products = syncListProducts();
     adminInfo = getListAdmin() || adminInfo;
 
     addEventChangeTab();
@@ -11,11 +11,12 @@ window.onload = function () {
         addTableProducts();
         addTableDonHang();
         addTableKhachHang();
+        addAdminStats();
         addThongKe();
 
         openTab('Trang Chủ')
     } else {
-        document.body.innerHTML = `<h1 style="color:red; with:100%; text-align:center; margin: 50px;"> Truy cập bị từ chối.. </h1>`;
+        document.body.innerHTML = `<h1 class="admin-denied"> Truy cập bị từ chối.. </h1>`;
     }
 }
 
@@ -24,9 +25,10 @@ function logOutAdmin() {
 }
 
 function getListRandomColor(length) {
+    let palette = ['#2563eb', '#16a34a', '#f97316', '#dc2626', '#7c3aed', '#0891b2', '#ca8a04', '#0f766e', '#be123c', '#4f46e5'];
     let result = [];
-    for(let i = length; i--;) {
-        result.push(getRandomColor());
+    for(let i = 0; i < length; i++) {
+        result.push(palette[i % palette.length]);
     }
     return result;
 }
@@ -56,21 +58,57 @@ function createChartConfig(
             }]
         },
         options: {
+            legend: {
+                labels: {
+                    fontColor: '#475569',
+                    boxWidth: 14,
+                    padding: 16
+                }
+            },
             title: {
-                fontColor: '#fff',
-                fontSize: 25,
+                fontColor: '#0f172a',
+                fontSize: 20,
                 display: true,
                 text: title
             },
             scales: {
                 yAxes: [{
+                    gridLines: {
+                        color: 'rgba(148, 163, 184, .22)'
+                    },
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero:true,
+                        fontColor: '#64748b'
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        fontColor: '#64748b'
                     }
                 }]
             }
         }
     };
+}
+
+function addAdminStats() {
+    var listUser = getListUser();
+    var listDH = getListDonHang();
+    var doanhThu = 0;
+
+    for(var d of listDH) {
+        if(d.tinhTrang !== 'Đã hủy') {
+            doanhThu += stringToNum(d.tongtien);
+        }
+    }
+
+    document.getElementById('adminStatProducts').innerHTML = list_products.length;
+    document.getElementById('adminStatOrders').innerHTML = listDH.length;
+    document.getElementById('adminStatUsers').innerHTML = listUser.length;
+    document.getElementById('adminStatRevenue').innerHTML = numToString(doanhThu);
 }
 
 function addThongKe() {
@@ -185,13 +223,13 @@ function addTableProducts() {
         var p = list_products[i];
         s += `<tr>
             <td style="width: 5%">` + (i+1) + `</td>
-            <td style="width: 10%">` + p.masp + `</td>
+            <td style="width: 10%"><span class="admin-code">` + p.masp + `</span></td>
             <td style="width: 40%">
-                <a title="Xem chi tiết" target="_blank" href="chitietsanpham.html?` + p.name.split(' ').join('-') + `">` + p.name + `</a>
+                <a title="Xem chi tiết" target="_blank" href="` + getLinkChiTietSanPham(p.name) + `">` + p.name + `</a>
                 <img src="` + p.img + `"></img>
             </td>
-            <td style="width: 15%">` + p.price + `</td>
-            <td style="width: 15%">` + promoToStringValue(p.promo) + `</td>
+            <td style="width: 15%"><strong class="admin-price">` + p.price + `</strong></td>
+            <td style="width: 15%">` + promoBadge(p.promo) + `</td>
             <td style="width: 15%">
                 <div class="tooltip">
                     <i class="fa fa-wrench" onclick="addKhungSuaSanPham('` + p.masp + `')"></i>
@@ -220,7 +258,7 @@ function timKiemSanPham(inp) {
 
     var listTr_table = document.getElementsByClassName('sanpham')[0].getElementsByClassName('table-content')[0].getElementsByTagName('tr');
     for (var tr of listTr_table) {
-        var td = tr.getElementsByTagName('td')[vitriKieuTim[kieuTim]].innerHTML.toLowerCase();
+        var td = tr.getElementsByTagName('td')[vitriKieuTim[kieuTim]].textContent.toLowerCase();
 
         if (td.indexOf(text.toLowerCase()) < 0) {
             tr.style.display = 'none';
@@ -324,6 +362,7 @@ function themSanPham() {
  
      // Vẽ lại table
      addTableProducts();
+     addAdminStats();
 
     alert('Thêm sản phẩm "' + newSp.name + '" thành công.');
     document.getElementById('khungThemSanPham').style.transform = 'scale(0)';
@@ -355,6 +394,7 @@ function xoaSanPham(masp, tensp) {
 
         // Vẽ lại table 
         addTableProducts();
+        addAdminStats();
     }
 }
 
@@ -386,6 +426,7 @@ function suaSanPham(masp) {
 
     // Vẽ lại table
     addTableProducts();
+    addAdminStats();
 
     alert('Sửa ' + sp.name + ' thành công');
 
@@ -418,7 +459,7 @@ function addKhungSuaSanPham(masp) {
             <td>
                 <select>`
                     
-    var company = ["Apple", "Samsung", "Oppo", "Nokia", "Huawei", "Xiaomi","Realme", "Vivo", "Philips", "Mobell", "Mobiistar", "Itel","Coolpad", "HTC", "Motorola"];
+    var company = ["Apple", "Samsung", "Xiaomi", "Oppo", "Vivo", "ASUS", "Honor", "Nothing", "Motorola"];
     for(var c of company) {
         if(sp.company == c)
             s += (`<option value="`+c+`" selected>`+c+`</option>`);
@@ -545,10 +586,10 @@ function getValueOfTypeInTable_SanPham(tr, loai) {
     var td = tr.getElementsByTagName('td');
     switch(loai) {
         case 'stt' : return Number(td[0].innerHTML);
-        case 'masp' : return td[1].innerHTML.toLowerCase();
-        case 'ten' : return td[2].innerHTML.toLowerCase();
-        case 'gia' : return stringToNum(td[3].innerHTML);
-        case 'khuyenmai' : return td[4].innerHTML.toLowerCase();
+        case 'masp' : return td[1].textContent.toLowerCase();
+        case 'ten' : return td[2].textContent.toLowerCase();
+        case 'gia' : return stringToNum(td[3].textContent);
+        case 'khuyenmai' : return td[4].textContent.toLowerCase();
     }
     return false;
 }
@@ -566,12 +607,12 @@ function addTableDonHang() {
         var d = listDH[i];
         s += `<tr>
             <td style="width: 5%">` + (i+1) + `</td>
-            <td style="width: 13%">` + d.ma + `</td>
-            <td style="width: 7%">` + d.khach + `</td>
+            <td style="width: 13%"><span class="admin-code">` + d.ma + `</span></td>
+            <td style="width: 7%"><strong>` + d.khach + `</strong></td>
             <td style="width: 20%">` + d.sp + `</td>
-            <td style="width: 15%">` + d.tongtien + `</td>
+            <td style="width: 15%"><strong class="admin-price">` + d.tongtien + `</strong></td>
             <td style="width: 10%">` + d.ngaygio + `</td>
-            <td style="width: 10%">` + d.tinhTrang + `</td>
+            <td style="width: 10%">` + orderStatusBadge(d.tinhTrang) + `</td>
             <td style="width: 10%">
                 <div class="tooltip">
                     <i class="fa fa-check" onclick="duyet('`+d.ma+`', true)"></i>
@@ -600,6 +641,7 @@ function getListDonHang(traVeDanhSachSanPham = false) {
             var tongtien = 0;
             for(var s of u[i].donhang[j].sp) {
                 var timsp = timKiemTheoMa(list_products, s.ma);
+                if(!timsp) continue;
                 if(timsp.promo.name == 'giareonline') tongtien += stringToNum(timsp.promo.value);
                 else tongtien += stringToNum(timsp.price);
             }
@@ -610,14 +652,17 @@ function getListDonHang(traVeDanhSachSanPham = false) {
             // Các sản phẩm - dạng html
             var sps = '';
             for(var s of u[i].donhang[j].sp) {
-                sps += `<p style="text-align: right">`+(timKiemTheoMa(list_products, s.ma).name + ' [' + s.soluong + ']') + `</p>`;
+                var spTrongDon = timKiemTheoMa(list_products, s.ma);
+                sps += `<p class="order-product-line">`+((spTrongDon ? spTrongDon.name : 'Sản phẩm đã ngừng bán') + ' [' + s.soluong + ']') + `</p>`;
             }
 
             // Các sản phẩm - dạng mảng
             var danhSachSanPham = [];
             for(var s of u[i].donhang[j].sp) {
+                var sanPham = timKiemTheoMa(list_products, s.ma);
+                if(!sanPham) continue;
                 danhSachSanPham.push({
-                    sanPham: timKiemTheoMa(list_products, s.ma),
+                    sanPham: sanPham,
                     soLuong: s.soluong,
                 });
             }
@@ -670,6 +715,7 @@ function duyet(maDonHang, duyetDon) {
 
     // vẽ lại
     addTableDonHang();
+    addAdminStats();
 }
 
 function locDonHangTheoKhoangNgay() {
@@ -678,7 +724,7 @@ function locDonHangTheoKhoangNgay() {
 
     var listTr_table = document.getElementsByClassName('donhang')[0].getElementsByClassName('table-content')[0].getElementsByTagName('tr');
     for (var tr of listTr_table) {
-        var td = tr.getElementsByTagName('td')[5].innerHTML;
+        var td = tr.getElementsByTagName('td')[5].textContent;
         var d = new Date(td);
 
         if (d >= from && d <= to) {
@@ -698,7 +744,7 @@ function timKiemDonHang(inp) {
 
     var listTr_table = document.getElementsByClassName('donhang')[0].getElementsByClassName('table-content')[0].getElementsByTagName('tr');
     for (var tr of listTr_table) {
-        var td = tr.getElementsByTagName('td')[vitriKieuTim[kieuTim]].innerHTML.toLowerCase();
+        var td = tr.getElementsByTagName('td')[vitriKieuTim[kieuTim]].textContent.toLowerCase();
 
         if (td.indexOf(text.toLowerCase()) < 0) {
             tr.style.display = 'none';
@@ -722,12 +768,12 @@ function getValueOfTypeInTable_DonHang(tr, loai) {
     var td = tr.getElementsByTagName('td');
     switch(loai) {
         case 'stt': return Number(td[0].innerHTML);
-        case 'ma' : return new Date(td[1].innerHTML); // chuyển về dạng ngày để so sánh ngày
-        case 'khach' : return td[2].innerHTML.toLowerCase(); // lấy tên khách
+        case 'ma' : return new Date(td[1].textContent); // chuyển về dạng ngày để so sánh ngày
+        case 'khach' : return td[2].textContent.toLowerCase(); // lấy tên khách
         case 'sanpham' : return td[3].children.length;    // lấy số lượng hàng trong đơn này, length ở đây là số lượng <p>
-        case 'tongtien' : return stringToNum(td[4].innerHTML); // trả về dạng giá tiền
-        case 'ngaygio' : return new Date(td[5].innerHTML); // chuyển về ngày
-        case 'trangthai': return td[6].innerHTML.toLowerCase(); //
+        case 'tongtien' : return stringToNum(td[4].textContent); // trả về dạng giá tiền
+        case 'ngaygio' : return new Date(td[5].textContent); // chuyển về ngày
+        case 'trangthai': return td[6].textContent.toLowerCase(); //
     }
     return false;
 }
@@ -744,11 +790,12 @@ function addTableKhachHang() {
         var u = listUser[i];
         s += `<tr>
             <td style="width: 5%">` + (i+1) + `</td>
-            <td style="width: 15%">` + u.ho + ' ' + u.ten + `</td>
+            <td style="width: 15%"><strong>` + u.ho + ' ' + u.ten + `</strong></td>
             <td style="width: 20%">` + u.email + `</td>
-            <td style="width: 20%">` + u.username + `</td>
+            <td style="width: 20%"><span class="admin-code">` + u.username + `</span></td>
             <td style="width: 10%">` + u.pass + `</td>
             <td style="width: 10%">
+                ` + userStatusBadge(u.off) + `
                 <div class="tooltip">
                     <label class="switch">
                         <input type="checkbox" `+(u.off?'':'checked')+` onclick="voHieuHoaNguoiDung(this, '`+u.username+`')">
@@ -778,7 +825,7 @@ function timKiemNguoiDung(inp) {
 
     var listTr_table = document.getElementsByClassName('khachhang')[0].getElementsByClassName('table-content')[0].getElementsByTagName('tr');
     for (var tr of listTr_table) {
-        var td = tr.getElementsByTagName('td')[vitriKieuTim[kieuTim]].innerHTML.toLowerCase();
+        var td = tr.getElementsByTagName('td')[vitriKieuTim[kieuTim]].textContent.toLowerCase();
 
         if (td.indexOf(text.toLowerCase()) < 0) {
             tr.style.display = 'none';
@@ -801,12 +848,11 @@ function voHieuHoaNguoiDung(inp, taikhoan) {
             u.off = value;
             setListUser(listUser);
             
+            addTableKhachHang();
             setTimeout(() => alert(`${value ? 'Khoá' : 'Mở khoá'} tải khoản ${u.username} thành công.`), 500);
             break;
         }
     }
-    var span = inp.parentElement.nextElementSibling;
-        span.innerHTML = (inp.checked?'Khóa':'Mở');
 }
 
 // Xóa người dùng
@@ -820,6 +866,7 @@ function xoaNguoiDung(taikhoan) {
                 localStorage.removeItem('CurrentUser'); // đăng xuất khỏi tài khoản hiện tại (current user)
                 addTableKhachHang(); // vẽ lại bảng khách hàng
                 addTableDonHang(); // vẽ lại bảng đơn hàng
+                addAdminStats();
                 return;
             }
         }
@@ -839,10 +886,10 @@ function getValueOfTypeInTable_KhachHang(tr, loai) {
     var td = tr.getElementsByTagName('td');
     switch(loai) {
         case 'stt': return Number(td[0].innerHTML);
-        case 'hoten' : return td[1].innerHTML.toLowerCase();
-        case 'email' : return td[2].innerHTML.toLowerCase();
-        case 'taikhoan' : return td[3].innerHTML.toLowerCase();    
-        case 'matkhau' : return td[4].innerHTML.toLowerCase(); 
+        case 'hoten' : return td[1].textContent.toLowerCase();
+        case 'email' : return td[2].textContent.toLowerCase();
+        case 'taikhoan' : return td[3].textContent.toLowerCase();    
+        case 'matkhau' : return td[4].textContent.toLowerCase(); 
     }
     return false;
 }
@@ -903,6 +950,26 @@ function promoToStringValue(pr) {
             return 'Mới';
     }
     return '';
+}
+
+function promoBadge(pr) {
+    var text = promoToStringValue(pr);
+    if(!text) return '<span class="admin-badge admin-badge-muted">Không</span>';
+    return '<span class="admin-badge admin-badge-promo">' + text + '</span>';
+}
+
+function orderStatusBadge(status) {
+    var className = 'admin-badge-muted';
+    if(status === 'Đang chờ xử lý') className = 'admin-badge-warning';
+    if(status === 'Đã giao hàng') className = 'admin-badge-success';
+    if(status === 'Đã hủy') className = 'admin-badge-danger';
+    return '<span class="admin-badge ' + className + '">' + status + '</span>';
+}
+
+function userStatusBadge(isOff) {
+    return isOff
+        ? '<span class="admin-badge admin-badge-danger">Đã khóa</span>'
+        : '<span class="admin-badge admin-badge-success">Đang mở</span>';
 }
 
 function progress(percent, bg, width, height) {

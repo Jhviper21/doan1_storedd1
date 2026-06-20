@@ -42,21 +42,37 @@
     <section>
         <script> addHeader(); </script>
 
-        <div id="productNotFound" style="min-height: 50vh; text-align: center; margin: 50px; display: none;">
-            <h1 style="color: red; margin-bottom: 10px;">Không tìm thấy sản phẩm</h1>
-            <a href="index.html" style="text-decoration: underline;">Quay lại trang chủ</a>
+        <div id="productNotFound">
+            <i class="fa fa-search"></i>
+            <h1>Không tìm thấy sản phẩm</h1>
+            <p>Sản phẩm có thể đã đổi tên, bị xóa hoặc đường dẫn không còn chính xác.</p>
+            <a href="index.html">Quay lại trang chủ</a>
         </div>
 
-        <div class="chitietSanpham" style="margin-bottom: 100px">
+        <div class="chitietSanpham">
             <h1>Điện thoại </h1>
             <div class="rating"></div>
+            <div class="detail-trust-row">
+                <div>
+                    <i class="fa fa-shield"></i>
+                    <span>Bảo hành chính hãng</span>
+                </div>
+                <div>
+                    <i class="fa fa-truck"></i>
+                    <span>Giao nhanh trong ngày</span>
+                </div>
+                <div>
+                    <i class="fa fa-refresh"></i>
+                    <span>Đổi trả dễ dàng</span>
+                </div>
+            </div>
             <div class="rowdetail group">
                 <div class="picture">
                     <img src="" onclick="opencertain()">
                 </div>
                 <div class="price_sale">
                     <div class="area_price"> </div>
-                    <div class="ship" style="display: none;">
+                    <div class="ship">
                         <img src="img/chitietsanpham/clock-152067_960_720.png">
                         <div>NHẬN HÀNG TRONG 1 GIỜ</div>
                     </div>
@@ -83,10 +99,10 @@
                     </div>
                     <div class="area_order">
                         <!-- nameProduct là biến toàn cục được khởi tạo giá trị trong phanTich_URL_chiTietSanPham -->
-                        <a class="buy_now" onclick="themVaoGioHang(maProduct, nameProduct);">
+                        <button class="buy_now" onclick="themSanPhamHienTaiVaoGioHang();">
                             <b><i class="fa fa-cart-plus"></i> Thêm vào giỏ hàng</b>
                             <p>Giao trong 1 giờ hoặc nhận tại cửa hàng</p>
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <div class="info_product">
@@ -114,6 +130,8 @@
     <script>addContainTaiKhoan();</script>
 
     <div class="footer"><script>addFooter();</script></div>
+
+    <i class="fa fa-arrow-up" id="goto-top-page" onclick="gotoTop()"></i>
 
 </body>
 

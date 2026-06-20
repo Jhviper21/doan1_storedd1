@@ -28,7 +28,14 @@
 
 <body>
     <header>
-        <h2>SmartPhone Store - Admin</h2>
+        <div class="admin-brand">
+            <span>PGH</span>
+            <small>store</small>
+        </div>
+        <div>
+            <h2>Bảng điều khiển quản trị</h2>
+            <p>Quản lý sản phẩm, đơn hàng và khách hàng của PGH Store.</p>
+        </div>
     </header>
 
     <!-- Menu -->
@@ -54,6 +61,36 @@
     <!-- Khung hiển thị chính -->
     <div class="main">
         <div class="home">
+            <div class="admin-section-head">
+                <div>
+                    <h1>Tổng quan cửa hàng</h1>
+                    <p>Theo dõi số lượng bán ra và doanh thu theo từng hãng điện thoại.</p>
+                </div>
+            </div>
+
+            <div class="admin-stat-grid">
+                <div class="admin-stat-card">
+                    <i class="fa fa-mobile"></i>
+                    <span>Sản phẩm</span>
+                    <strong id="adminStatProducts">0</strong>
+                </div>
+                <div class="admin-stat-card">
+                    <i class="fa fa-file-text-o"></i>
+                    <span>Đơn hàng</span>
+                    <strong id="adminStatOrders">0</strong>
+                </div>
+                <div class="admin-stat-card">
+                    <i class="fa fa-users"></i>
+                    <span>Khách hàng</span>
+                    <strong id="adminStatUsers">0</strong>
+                </div>
+                <div class="admin-stat-card">
+                    <i class="fa fa-line-chart"></i>
+                    <span>Doanh thu</span>
+                    <strong id="adminStatRevenue">0</strong>
+                </div>
+            </div>
+
             <div class="canvasContainer">
                 <canvas id="myChart1"></canvas>
             </div>
@@ -61,18 +98,17 @@
             <div class="canvasContainer">
                 <canvas id="myChart2"></canvas>
             </div>
-
-            <div class="canvasContainer">
-                <canvas id="myChart3"></canvas>
-            </div>
-
-            <div class="canvasContainer">
-                <canvas id="myChart4"></canvas>
-            </div>
         </div>
 
         <!-- Sản Phẩm -->
         <div class="sanpham">
+            <div class="admin-section-head">
+                <div>
+                    <h1>Quản lý sản phẩm</h1>
+                    <p>Thêm, chỉnh sửa, tìm kiếm và sắp xếp danh sách sản phẩm.</p>
+                </div>
+            </div>
+
             <table class="table-header">
                 <tr>
                     <!-- Theo độ rộng của table content -->
@@ -119,7 +155,7 @@
                         <td>
                             <select name="chonCompany" onchange="autoMaSanPham(this.value)">
                                 <script>
-                                    var company = ["Apple", "Samsung", "Oppo", "Nokia", "Huawei", "Xiaomi","Realme", "Vivo", "Philips", "Mobell", "Mobiistar", "Itel","Coolpad", "HTC", "Motorola"];
+                                    var company = ["Apple", "Samsung", "Xiaomi", "Oppo", "Vivo", "ASUS", "Honor", "Nothing", "Motorola"];
                                     for(var c of company) {
                                         document.writeln(`<option value="`+c+`">`+c+`</option>`);
                                     }
@@ -212,6 +248,13 @@
 
         <!-- Đơn Hàng -->
         <div class="donhang">
+            <div class="admin-section-head">
+                <div>
+                    <h1>Quản lý đơn hàng</h1>
+                    <p>Duyệt, hủy và lọc đơn hàng theo khách hàng, trạng thái hoặc thời gian.</p>
+                </div>
+            </div>
+
             <table class="table-header">
                 <tr>
                     <!-- Theo độ rộng của table content -->
@@ -250,6 +293,13 @@
 
         <!-- Khách hàng -->
         <div class="khachhang">
+            <div class="admin-section-head">
+                <div>
+                    <h1>Quản lý khách hàng</h1>
+                    <p>Theo dõi tài khoản, khóa hoặc xóa người dùng khi cần.</p>
+                </div>
+            </div>
+
             <table class="table-header">
                 <tr>
                     <!-- Theo độ rộng của table content -->

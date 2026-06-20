@@ -1,11 +1,12 @@
 /* Plc */
 .plc {
-	background: #dae2dc;
+	background: #fff;
 	/* overflow: hidden; */
 	font-size: 15px;
-	color: #333;
-	border-top: 1px solid #bbb;
-	border-bottom: 1px solid #bbb;
+	color: #334155;
+	border-top: 1px solid #e5e7eb;
+	border-bottom: 1px solid #e5e7eb;
+	margin-top: 30px;
 }
 
 .plc ul {
@@ -16,10 +17,10 @@
 	width: 20%;
 	display: inline-block;
 	box-sizing: border-box;
-	padding: 5px 10px;
+	padding: 16px 14px;
 	line-height: 20px;
-	border-right: solid 1px #bbb;
-	margin: 5px 0;
+	border-right: solid 1px #e5e7eb;
+	margin: 8px 0;
 }
 
 .plc li:last-child {
@@ -31,7 +32,7 @@
 	position: relative;
 	/* height: 40px; */
 	width: 100%;
-	background: #476;
+	background: #111827;
 }
 
 .copy-right {
@@ -39,19 +40,42 @@
 	/* bottom: 0; */
 	width: 100%;
 	text-align: center;
-	line-height: 40px;
+	line-height: 44px;
 	font-size: 14px;
-	color: #ccc;
-	background-color: #252525;
+	color: #cbd5e1;
+	background-color: #111827;
 }
 
 .copy-right a {
-	color: #ccc;
+	color: #fff;
 	transition: .2s ease;
 }
 
 .copy-right a:hover {
+	color: #93c5fd;
+}
+
+.copy-author {
 	color: #fff;
+	font-weight: bold;
+}
+
+.plc-phone {
+	color: #2563eb;
+	font-weight: 700;
 }
 
 /* ======= End Footer ======== */
+
+@media (max-width: 1023px) {
+	.plc li {
+		width: 50%;
+		border-right: 0;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.copy-right {
+		line-height: 1.5;
+		padding: 14px 12px;
+	}
+}

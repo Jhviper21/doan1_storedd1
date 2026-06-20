@@ -1,9 +1,9 @@
 /* Top Navigation */
 	.top-nav {
 		display: inline-block;
-		background: #f1f1f1;
+		background: #111827;
 		width: 100%;
-		border-bottom: 1px #e1e1e1 solid;
+		border-bottom: 1px solid rgba(255,255,255,.08);
 	}
 
 	/* Social Icon */
@@ -19,9 +19,9 @@
 			height: 2em;
 			width: 2em;
 			line-height: 2em;
-			color: gray;
-			background-color: #f1f1f1;
-			transition-duration: .2s;
+			color: #cbd5e1;
+			background-color: transparent;
+			transition: .2s ease;
 		}
 		/* hightlight icon fb, google, youtube .... when hover */
 		.social-top-nav a:hover { color: #fff; }
@@ -38,21 +38,44 @@
 		.top-nav-quicklink li {
 			display: inline-block;
 			font-size: 1em;
-			color: gray;
+			color: #cbd5e1;
 		}
 		.top-nav-quicklink li a {
 			display: block;
-			color: gray;
-			padding: 8px 15px;
-			transition-duration: .15s;
+			color: #cbd5e1;
+			padding: 9px 13px;
+			border-radius: 999px;
+			transition: .18s ease;
 		}
 		.top-nav-quicklink li a:hover {
-			padding-top: 4px; 
-			border-bottom: 4px solid #000;
-			color: #000;
+			background: rgba(255,255,255,.1);
+			color: #fff;
 		}
 		.top-nav-quicklink li a:hover i {
 			color: Dodgerblue;
 		}
 	/* ======= End quick link ======= */
 /* ======= End Top navigation ======= */
+
+@media (max-width: 1023px) {
+	.top-nav section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		padding: 8px 12px;
+	}
+
+	.social-top-nav,
+	.top-nav-quicklink {
+		float: none;
+	}
+
+	.top-nav-quicklink {
+		justify-content: center;
+	}
+
+	.top-nav-quicklink li a {
+		padding: 8px 10px;
+	}
+}

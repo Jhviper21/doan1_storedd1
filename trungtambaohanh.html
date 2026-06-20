@@ -27,7 +27,7 @@
         window.onload = function () {
             khoiTao();
             // thêm tags (từ khóa) vào khung tìm kiếm
-            var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+            var tags = ["Apple", "Samsung", "Xiaomi", "OPPO", "vivo"];
             for (var t of tags) addTags(t, "index.html?search=" + t);
         }
     </script>
@@ -37,13 +37,42 @@
 
     <script>addTopNav();</script>
 
-    <section style="min-height: 85vh">
+    <section class="page-section">
         <script>addHeader();</script>
+
+        <div class="warranty-page">
+            <div class="warranty-hero">
+                <span>PGH Care</span>
+                <h1>Trung tâm bảo hành</h1>
+                <p>Tra cứu địa chỉ bảo hành gần bạn và xem nhanh thời gian làm việc của từng trung tâm.</p>
+            </div>
+
+            <div class="warranty-highlights">
+                <div>
+                    <i class="fa fa-map-marker"></i>
+                    <strong>15</strong>
+                    <span>Điểm hỗ trợ</span>
+                </div>
+                <div>
+                    <i class="fa fa-clock-o"></i>
+                    <strong>8h - 17h</strong>
+                    <span>Thời gian làm việc</span>
+                </div>
+                <div>
+                    <i class="fa fa-shield"></i>
+                    <strong>Chính hãng</strong>
+                    <span>Hỗ trợ bảo hành</span>
+                </div>
+            </div>
+
+            <p class="warranty-note">
+                Chọn vào địa chỉ trong bảng để mở vị trí trung tâm trên Google Maps.
+            </p>
 
         <table>
             <tr>
                 <td colspan="4" class="header-table">
-                    <marquee behavior="scroll" direction=left>Các trung tâm bảo hành của Smartphone Store</marquee>
+                    Các trung tâm bảo hành của PGH Store
                 </td>
             </tr>
             <tr>
@@ -89,6 +118,7 @@
                 }
             </script>
         </table>
+        </div>
 
     </section>
 

@@ -2,7 +2,7 @@ window.onload = function () {
     khoiTao();
 
     // thêm tags (từ khóa) vào khung tìm kiếm
-    var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+    var tags = ["Apple", "Samsung", "Xiaomi", "OPPO", "vivo"];
     for (var t of tags) addTags(t, "index.html?search=" + t);
 }
 

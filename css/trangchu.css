@@ -1,37 +1,43 @@
 .companyMenu {
-	margin: 10px 0 30px; 
+	margin: 22px 0 22px;
+	gap: 10px;
 }
 
 .companyMenu a {
-    border: 2px solid #fff;
-    height: 40px;
-    line-height: 40px;
-    transition-duration: .2s;
+    border: 1px solid #e5e7eb;
+    height: 48px;
+    line-height: 46px;
+    padding: 0 14px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
+    transition: .18s ease;
 }
 
 .companyMenu a:hover {
-	border: 2px solid #aaa;
-	transform: scale(1.1);
+	border-color: #2563eb;
+	transform: translateY(-3px);
 	z-index: 20;
 }
 
 .companyMenu a img{
-    max-height: 30px;
+    max-height: 28px;
     vertical-align: middle;
     margin-top: -3px;
 }
 
 /* Dropdown From w3 */
 	.dropbtn {
-	    background-color: #444;
-	    color: white;
-	    padding: 10px 14px;
+	    background-color: #fff;
+	    border: 1px solid #dbe3ec;
+	    color: #334155;
+	    padding: 11px 16px;
 	    font-size: 15px;
-	    border: none;
-	    border-radius: 5px;
+	    border-radius: 999px;
 	    cursor: pointer;
 		margin-bottom: 5px;
-		transition-duration: .3s;
+		box-shadow: 0 8px 20px rgba(15, 23, 42, .06);
+		transition: .2s ease;
 	}
 	.dropbtn:after {
 		/* kí tự mũi tên > */
@@ -43,57 +49,65 @@
 	}
 	.dropdown {
 	    position: relative;
-	    margin: 10px 5px;
+	    margin: 10px 6px;
 	}
 	.dropdown-content {
-	    z-index: 1;
+	    z-index: 30;
 	    position: absolute;
 	    min-width: 170px;
-	    border-radius: 5px;
-	    background-color: rgba(255, 255, 255, .8);
-		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+	    border-radius: 14px;
+	    background-color: rgba(255, 255, 255, .98);
+		box-shadow: 0 18px 38px rgba(15, 23, 42, .16);
+		border: 1px solid #e5e7eb;
+		overflow: hidden;
 		/* mặc địng là xoay 90 độ => bị ẩn đi */
 	    transform: rotateX(90deg);
 	    transition-duration: .3s;
 	}
 	.dropdown-content a {
-	    color: #444;
+	    color: #334155;
 	    padding: 12px 16px;
 	    text-decoration: none;
 	    display: block;
 	}
 	.dropdown-content a:hover { 
-		color: white;
-		background-color: #555 
+		color: #2563eb;
+		background-color: #eff6ff 
 	}
 	.dropdown:hover .dropdown-content {
 	    /* khi hover vào thì cần hiện content ra => xoay 0 độ => trờ về như cũ */
 	    transform: rotateY(0deg);
 	}
 	.dropdown:hover .dropbtn {
-	    background-color: #3e8e41;
+	    background-color: #2563eb;
+	    color: #fff;
+	    border-color: #2563eb;
 	}
 /* ============== End From W3 ============== */
 
 /* Filter by Name */
 .filterName {
-	margin: 15px auto;
+	margin: 18px auto;
 	text-align: center;
 	/* width: 195px; */
 }
 .filterName input {
-	padding: 0 15px;
+	padding: 0 16px;
 	/* width: calc(100% - 30px); 15px la padding left cua input */
-	height: 30px;
-	border: 2px solid #bbb;
-	border-radius: 10px;
+	height: 42px;
+	min-width: 320px;
+	border: 1px solid #dbe3ec;
+	border-radius: 999px;
 	font-size: 15px;
+	background: #fff;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
 	-webkit-transition-duration: .3s;
      -o-transition-duration: .3s;
         transition-duration: .3s;
 }
 .filterName input:focus {
-	border: 2px solid orange;
+	border-color: #2563eb;
+	box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
 } 
 
 /* Choosed filter */
@@ -103,10 +117,10 @@
 /* .choosedFilter a:hover > h3 { text-decoration: line-through; } */
 .choosedFilter a {
     font-size: 12px;
-    padding: 6px;
+    padding: 7px 10px;
     color: #fff;
     background: #288ad6;
-    border-radius: 4px;
+    border-radius: 999px;
     margin-right: 5px;
 }
 
@@ -117,20 +131,27 @@
 
 .khungSanPham {
 	width: 100%;
-	margin: 50px 0;
-	border-radius: 5px;
-	border: 2px solid #ff4d00; 
+	margin: 42px 0;
+	padding: 0 14px 18px;
+	border-radius: 18px;
+	border: 1px solid #e5e7eb !important;
+	background: #fff;
+	box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
 	box-sizing: border-box; /* dùng để width ko vượt ra ngoài khi có border */
 }
 
 .khungSanPham h3.tenKhung {
 	line-height: 1.5em;
-	font-size: 1.5em;
+	font-size: 1.35em;
 	text-align: center;
 	margin: 0 auto;
-	border-radius: 1em;
+	width: fit-content;
+	min-width: 260px;
+	padding: 6px 24px;
+	border-radius: 999px;
 	color: white;
-	transform: translateY(-0.75em);
+	transform: translateY(-0.95em);
+	box-shadow: 0 12px 24px rgba(15, 23, 42, .16);
 }
 
 .khungSanPham li {
@@ -144,14 +165,34 @@
 	text-align: center;
 	/* max-width: 25%; */
 	margin:	0 auto;
-	padding: .5em 1em;
-	border-radius: 1em;
-	color: #888;
-	background-color: #eee;
-	transition-duration: .2s;
+	width: fit-content;
+	padding: .7em 1.2em;
+	border-radius: 999px;
+	color: #2563eb;
+	background-color: #eff6ff;
+	border: 1px solid #bfdbfe !important;
+	transition: .2s ease;
 	transform: translateY(1em);
 }
 .xemTatCa:hover {
-	background-color: #ccc;
-	color: #000;
+	background-color: #2563eb;
+	color: #fff;
+	transform: translateY(.8em);
+}
+
+@media (max-width: 1023px) {
+	.filterName input {
+		min-width: 0;
+		width: min(420px, 100%);
+	}
+
+	.khungSanPham {
+		padding: 0 10px 18px;
+	}
+
+	.khungSanPham h3.tenKhung {
+		min-width: 0;
+		max-width: calc(100% - 24px);
+		font-size: 1.1em;
+	}
 }

@@ -3,8 +3,18 @@ var adminInfo = [{
     "pass": "adadad"
 }];
 
+function getLocalStorageJSON(key, fallback) {
+    try {
+        var data = window.localStorage.getItem(key);
+        return data ? JSON.parse(data) : fallback;
+    } catch (e) {
+        console.warn('Không đọc được dữ liệu localStorage:', key, e);
+        return fallback;
+    }
+}
+
 function getListAdmin() {
-    return JSON.parse(window.localStorage.getItem('ListAdmin'));
+    return getLocalStorageJSON('ListAdmin', null);
 }
 
 function setListAdmin(l) {
@@ -15,7 +25,7 @@ function setListAdmin(l) {
 // Hàm khởi tạo, tất cả các trang đều cần
 function khoiTao() {
     // get data từ localstorage
-    list_products = getListProducts() || list_products;
+    list_products = syncListProducts();
     adminInfo = getListAdmin() || adminInfo;
 
     setupEventTaiKhoan();
@@ -30,7 +40,20 @@ function setListProducts(newList) {
 }
 
 function getListProducts() {
-    return JSON.parse(window.localStorage.getItem('ListProducts'));
+    return getLocalStorageJSON('ListProducts', null);
+}
+
+function syncListProducts() {
+    var version = typeof PRODUCT_DATA_VERSION != 'undefined' ? PRODUCT_DATA_VERSION : '';
+    var storedVersion = window.localStorage.getItem('ProductDataVersion');
+
+    if (version && storedVersion != version) {
+        setListProducts(list_products);
+        window.localStorage.setItem('ProductDataVersion', version);
+        return list_products;
+    }
+
+    return getListProducts() || list_products;
 }
 
 function timKiemTheoTen(list, ten, soluong) {
@@ -70,7 +93,12 @@ function copyObject(o) {
 // div có id alert được tạo trong hàm addFooter
 function addAlertBox(text, bgcolor, textcolor, time) {
     var al = document.getElementById('alert');
-    al.childNodes[0].nodeValue = text;
+    if (!al) {
+        alert(text);
+        return;
+    }
+    var alertText = document.getElementById('alertText');
+    if (alertText) alertText.textContent = text;
     al.style.backgroundColor = bgcolor;
     al.style.opacity = 1;
     al.style.zIndex = 200;
@@ -84,8 +112,10 @@ function addAlertBox(text, bgcolor, textcolor, time) {
 }
 
 function addEventCloseAlertButton() {
-    document.getElementById('closebtn')
-        .addEventListener('mouseover', (event) => {
+    var closeBtn = document.getElementById('closebtn');
+    if (!closeBtn) return;
+    closeBtn
+        .addEventListener('click', (event) => {
             // event.target.parentElement.style.display = "none";
             event.target.parentElement.style.opacity = 0;
             event.target.parentElement.style.zIndex = 0;
@@ -96,6 +126,7 @@ function addEventCloseAlertButton() {
 function animateCartNumber() {
     // Hiệu ứng cho icon giỏ hàng
     var cn = document.getElementsByClassName('cart-number')[0];
+    if (!cn) return;
     cn.style.transform = 'scale(2)';
     cn.style.backgroundColor = 'rgba(255, 0, 0, 0.8)';
     cn.style.color = 'white';
@@ -107,6 +138,10 @@ function animateCartNumber() {
 }
 
 function themVaoGioHang(masp, tensp) {
+    if (!masp) {
+        addAlertBox('Không thể thêm sản phẩm này vào giỏ hàng.', '#ffb400', '#fff', 2500);
+        return;
+    }
     var user = getCurrentUser();
     if (!user) {
         alert('Bạn cần đăng nhập để mua hàng !');
@@ -149,7 +184,7 @@ function themVaoGioHang(masp, tensp) {
 
 // Hàm get set cho người dùng hiện tại đã đăng nhập
 function getCurrentUser() {
-    return JSON.parse(window.localStorage.getItem('CurrentUser')); // Lấy dữ liệu từ localstorage
+    return getLocalStorageJSON('CurrentUser', null); // Lấy dữ liệu từ localstorage
 }
 
 function setCurrentUser(u) {
@@ -158,7 +193,7 @@ function setCurrentUser(u) {
 
 // Hàm get set cho danh sách người dùng
 function getListUser() {
-    var data = JSON.parse(window.localStorage.getItem('ListUser')) || []
+    var data = getLocalStorageJSON('ListUser', []) || []
     var l = [];
     for (var d of data) {
         l.push(d);
@@ -270,6 +305,7 @@ function logOut() {
 function showTaiKhoan(show) {
     var value = (show ? "scale(1)" : "scale(0)");
     var div = document.getElementsByClassName('containTaikhoan')[0];
+    if (!div) return;
     div.style.transform = value;
 }
 
@@ -284,6 +320,7 @@ function checkTaiKhoan() {
 // Tạo event, hiệu ứng cho form tài khoản
 function setupEventTaiKhoan() {
     var taikhoan = document.getElementsByClassName('taikhoan')[0];
+    if (!taikhoan) return;
     var list = taikhoan.getElementsByTagName('input');
 
     // Tạo eventlistener cho input để tạo hiệu ứng label
@@ -330,10 +367,12 @@ function setupEventTaiKhoan() {
             // Ẩn phần nhập của login nếu ấn signup và ngược lại
             // href của 2 tab signup và login là #signup và #login -> tiện cho việc getElement dưới đây
             var target = this.href.split('#')[1];
-            document.getElementById(target).style.display = 'block';
+            var targetElement = document.getElementById(target);
+            if (targetElement) targetElement.style.display = 'block';
 
             var hide = (target == 'login' ? 'signup' : 'login');
-            document.getElementById(hide).style.display = 'none';
+            var hideElement = document.getElementById(hide);
+            if (hideElement) hideElement.style.display = 'none';
         })
     }
 
@@ -345,20 +384,24 @@ function setupEventTaiKhoan() {
 function capNhat_ThongTin_CurrentUser() {
     var u = getCurrentUser();
     if (u) {
+        var cartNumber = document.getElementsByClassName('cart-number')[0];
+        var member = document.getElementsByClassName('member')[0];
+        var menuMember = document.getElementsByClassName('menuMember')[0];
+        if (!cartNumber || !member || !menuMember) return;
+
         // Cập nhật số lượng hàng vào header
-        document.getElementsByClassName('cart-number')[0].innerHTML = getTongSoLuongSanPhamTrongGioHang(u);
+        cartNumber.innerHTML = getTongSoLuongSanPhamTrongGioHang(u);
         // Cập nhật tên người dùng
-        document.getElementsByClassName('member')[0]
-            .getElementsByTagName('a')[0].childNodes[2].nodeValue = ' ' + u.username;
+        member.getElementsByTagName('a')[0].innerHTML = '<i class="fa fa-user"></i> ' + u.username;
         // bỏ class hide của menu người dùng
-        document.getElementsByClassName('menuMember')[0]
-            .classList.remove('hide');
+        menuMember.classList.remove('hide');
     }
 }
 
 // tính tổng số lượng các sản phẩm của user u truyền vào
 function getTongSoLuongSanPhamTrongGioHang(u) {
     var soluong = 0;
+    if (!u || !u.products) return soluong;
     for (var p of u.products) {
         soluong += p.soluong;
     }
@@ -385,6 +428,7 @@ function stringToNum(str, char) {
 
 // https://www.w3schools.com/howto/howto_js_autocomplete.asp
 function autocomplete(inp, arr) {
+    if (!inp || !arr) return;
     var currentFocus;
 
     inp.addEventListener("keyup", function (e) {
@@ -504,13 +548,19 @@ function addTags(nameTag, link) {
 
     // Thêm <a> vừa tạo vào khung tìm kiếm
     var khung_tags = document.getElementsByClassName('tags')[0];
+    if (!khung_tags) return;
     khung_tags.innerHTML += new_tag;
+}
+
+function getLinkChiTietSanPham(tenSanPham) {
+    return 'chitietsanpham.html?' + encodeURIComponent(tenSanPham.split(' ').join('-'));
 }
 
 // Thêm sản phẩm vào trang
 function addProduct(p, ele, returnString) {
-	promo = new Promo(p.promo.name, p.promo.value); // class Promo
-	product = new Product(p.masp, p.name, p.img, p.price, p.star, p.rateCount, promo); // Class product
+	var promoData = p.promo || {};
+	var promo = new Promo(promoData.name, promoData.value); // class Promo
+	var product = new Product(p.masp, p.name, p.img, p.price, p.star, p.rateCount, promo); // Class product
 
 	return addToWeb(product, ele, returnString);
 }
@@ -550,7 +600,7 @@ function addHeader() {
         </div> <!-- End Logo -->
 
         <div class="content">
-            <div class="search-header" style="position: relative; left: 162px; top: 1px;">
+            <div class="search-header">
                 <form class="input-search" method="get" action="index.html">
                     <div class="autocomplete">
                         <input id="search-box" name="search" autocomplete="off" type="text" placeholder="Nhập từ khóa tìm kiếm...">
@@ -601,13 +651,14 @@ function addFooter() {
     document.write(`
     <!-- ============== Alert Box ============= -->
     <div id="alert">
+        <span id="alertText"></span>
         <span id="closebtn">&otimes;</span>
     </div>
 
     <!-- ============== Footer ============= -->
     <div class="copy-right">
         <p><a href="index.html">LDD Phone Store</a> - All rights reserved © 2021 - Designed by
-            <span style="color: #eee; font-weight: bold">group 15th</span></p>
+            <span class="copy-author">group 15th</span></p>
     </div>`);
 }
 
@@ -715,7 +766,7 @@ function addPlc() {
                 <li>Lỗi đổi tại nhà trong 1 ngày</li>
                 <li>Hỗ trợ suốt thời gian sử dụng.
                     <br>Hotline:
-                    <a href="tel:12345678" style="color: #288ad6;">12345678</a>
+                    <a class="plc-phone" href="tel:12345678">12345678</a>
                 </li>
             </ul>
         </section>
@@ -756,10 +807,13 @@ function gotoTop() {
             scrollTop: 0
         }, 100);
     } else {
-        document.getElementsByClassName('top-nav')[0].scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        var topNav = document.getElementsByClassName('top-nav')[0];
+        if (topNav) {
+            topNav.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }

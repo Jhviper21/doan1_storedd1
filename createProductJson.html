@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Create Product code</title>
+	<title>Tạo dữ liệu sản phẩm</title>
 
 	<!-- Load font awesome icons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -12,60 +12,31 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" href="css/header.css">
 	<link rel="stylesheet" type="text/css" href="css/home_products.css">
+	<link rel="stylesheet" type="text/css" href="css/createProductJson.css">
 
 	<script src="data/products.js"></script>
 	<script src="js/classes.js"></script>
 	<script src="js/dungchung.js"></script>
 
-	<style>
-		* { 
-			outline: none; 
-			font-family: sans-serif; 
-		}
-		
-		table {
-			padding: 5px 3px;
-			border : 1px solid #333;
-			margin: 10px auto;
-		}
-		td {
-			padding: 5px 3px;
-			border-bottom: 1pt solid #333;
-		}
-		input {
-			padding: 5px 3px;
-			height: 26px;
-			font-size: 20px;
-		}
-		button {
-			border-radius: 10px;
-			margin: 10px auto;
-			font-size: 20px;
-			padding: 10px 5px;
-			border: none;
-			cursor: pointer;
-			background: #487;
-		}
-		button:hover {
-			background: #4a7;
-		}
-		textarea {
-			padding: 5px 3px;
-			font-size: 16px;
-		}
-		.homeproduct li {
-			width: 250px;
-		}
-	</style>
-
 	<script>
 		// Thêm sản phẩm vào trang
 		function addProduct(p, id) {
-			promo = new Promo(p.promo.name, p.promo.value); // class Promo
-			product = new Product(p.img, p.name, p.price, p.star, p.rateCount, promo); // Class product
+			var promo = new Promo(p.promo.name, p.promo.value); // class Promo
+			var product = new Product(p.masp || p.name, p.name, p.img, p.price, p.star, p.rateCount, promo); // Class product
 			addToWeb(product, id);
 		}
+
+		function makeProductCode(company) {
+			var prefix = (company || 'SP').substring(0, 3);
+			var count = 0;
+			for (var p of list_products) {
+				if (p.company == company) count++;
+			}
+			return prefix + count;
+		}
+
 		function getResult() {
+			var masp = document.getElementById('masp').value;
 			var name = document.getElementById('name').value;
 			var company = document.getElementById('company').value;
 			var img = document.getElementById('img').value;
@@ -78,6 +49,7 @@
 			if(img.indexOf('http') < 0) {
 				img = "img/products/"+ img;	
 			}
+			if(!masp) masp = makeProductCode(company);
 return {
 	"name": name,
 	"company": company,
@@ -88,7 +60,19 @@ return {
 	"promo": {
 		"name": promoName,
 		"value": promoValue
-	}
+	},
+	"detail": {
+		"screen": document.getElementById('screen').value,
+		"os": document.getElementById('os').value,
+		"camara": document.getElementById('camara').value,
+		"camaraFront": document.getElementById('camaraFront').value,
+		"cpu": document.getElementById('cpu').value,
+		"ram": document.getElementById('ram').value,
+		"rom": document.getElementById('rom').value,
+		"microUSB": document.getElementById('microUSB').value,
+		"battery": document.getElementById('battery').value
+	},
+	"masp": masp
 };
 		}
 
@@ -101,9 +85,14 @@ return {
 
 			addProduct(r, 'products');
 			var textarea = document.getElementById('t_a');
-			if(textarea.innerHTML == '')
-				textarea.innerHTML += JSON.stringify(r, null, "\t");
-			else textarea.innerHTML += ',\n'+JSON.stringify(r, null, "\t");
+			if(textarea.value == '')
+				textarea.value += JSON.stringify(r, null, "\t");
+			else textarea.value += ',\n'+JSON.stringify(r, null, "\t");
+		}
+
+		function clearOutput() {
+			document.getElementById('products').innerHTML = '';
+			document.getElementById('t_a').value = '';
 		}
 
 		function valueChange() {
@@ -117,57 +106,62 @@ return {
 				inp[i].onkeyup = valueChange;
 			}
 			document.getElementById('company').onchange = valueChange;
+			document.getElementById('promoName').onchange = valueChange;
 		}
 	</script>
 
 </head>
 
 <body>
-	<table>
+	<div class="product-json-tool">
+		<div class="tool-header">
+			<h1>Tạo dữ liệu sản phẩm</h1>
+			<p>Nhập thông tin, xem trước card sản phẩm và xuất JSON để thêm vào data/products.js.</p>
+		</div>
+
+	<table class="tool-table">
 		<tr>
 			<td>
-				<table cellpadding="7">
+				<table class="form-table" cellpadding="7">
+					<tr>
+						<td>Mã sản phẩm:</td>
+						<td><input id="masp" type="text" placeholder="Bỏ trống để tự sinh"></td>
+					</tr>
 					<tr>
 						<td>Tên sản phẩm:</td>
 						<td><input id="name" type="text" onchange=""></td>
 					</tr>
 					<tr>
-						<td>Tên Hãng:</td>
+						<td>Tên hãng:</td>
 						<td>
 							<select name="" id="company">
 								<option value="Apple">Apple</option>
 								<option value="Samsung">Samsung</option>
-								<option value="Oppo">Oppo</option>
-								<option value="Nokia">Nokia</option>
-								<option value="Huawei">Huawei</option>
 								<option value="Xiaomi">Xiaomi</option>
-								<option value="Realme">Realme</option>
+								<option value="Oppo">Oppo</option>
 								<option value="Vivo">Vivo</option>
-								<option value="Philips">Philips</option>
-								<option value="Mobell">Mobell</option>
-								<option value="Mobiistar">Mobiistar</option>
-								<option value="Itel">Itel</option>
-								<option value="Coolpad">Coolpad</option>
-								<option value="HTC">HTC</option>
+								<option value="ASUS">ASUS</option>
+								<option value="Honor">Honor</option>
+								<option value="Nothing">Nothing</option>
 								<option value="Motorola">Motorola</option>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td>Tên file ảnh</td>
-						<td><input id="img" type="text"></td>
+						<td><input id="img" type="text" placeholder="iphone-x-256gb-silver-400x400.jpg"></td>
 					</tr>
 					<tr>
 						<td>Giá tiền:</td>
-						<td><input id="price" type="text"></td>
+						<td><input id="price" type="text" placeholder="31.990.000"></td>
 					</tr>
 					<tr>
 						<td>Đánh giá (mấy sao):</td>
-						<td><input id="star" type="text"></td>
+						<td><input id="star" type="number" min="0" max="5"></td>
 					</tr>
 					<tr>
 						<td>Số lượt đánh giá:</td>
-						<td><input id="rateCount" type="text"></td>
+						<td><input id="rateCount" type="number" min="0"></td>
 					</tr>
 					<tr>
 						<td>Khuyến mãi:</td>
@@ -184,7 +178,46 @@ return {
 					</tr>
 					<tr>
 						<td>Giá trị khuyến mãi:</td>
-						<td><input id="promoValue" type="text"></td>
+						<td><input id="promoValue" type="text" placeholder="0, 500.000 hoặc 27.990.000"></td>
+					</tr>
+					<tr>
+						<th colspan="2">Thông số kỹ thuật</th>
+					</tr>
+					<tr>
+						<td>Màn hình:</td>
+						<td><input id="screen" type="text"></td>
+					</tr>
+					<tr>
+						<td>Hệ điều hành:</td>
+						<td><input id="os" type="text"></td>
+					</tr>
+					<tr>
+						<td>Camera sau:</td>
+						<td><input id="camara" type="text"></td>
+					</tr>
+					<tr>
+						<td>Camera trước:</td>
+						<td><input id="camaraFront" type="text"></td>
+					</tr>
+					<tr>
+						<td>CPU:</td>
+						<td><input id="cpu" type="text"></td>
+					</tr>
+					<tr>
+						<td>RAM:</td>
+						<td><input id="ram" type="text"></td>
+					</tr>
+					<tr>
+						<td>Bộ nhớ trong:</td>
+						<td><input id="rom" type="text"></td>
+					</tr>
+					<tr>
+						<td>Thẻ nhớ:</td>
+						<td><input id="microUSB" type="text"></td>
+					</tr>
+					<tr>
+						<td>Dung lượng pin:</td>
+						<td><input id="battery" type="text"></td>
 					</tr>
 				</table>
 			</td>
@@ -196,6 +229,7 @@ return {
 		<tr>
 			<td colspan="2">
 				<button onclick="saveToDatabase()">Lưu vào database</button>
+				<button class="secondary-button" onclick="clearOutput()">Xóa kết quả</button>
 			</td>
 		</tr>
 		<tr>
@@ -210,6 +244,7 @@ return {
 			</td>
 		</tr>
 	</table>
+	</div>
 
 </body>
 

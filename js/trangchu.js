@@ -25,14 +25,11 @@ window.onload = function () {
 	autocomplete(document.getElementById('search-box'), list_products);
 
 	// thêm tags (từ khóa) vào khung tìm kiếm
-	var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+	var tags = ["Apple", "Samsung", "Xiaomi", "OPPO", "vivo"];
 	for (var t of tags) addTags(t, "index.html?search=" + t);
 
 	// Thêm danh sách hãng điện thoại
-	var company = ["Apple.jpg", "Samsung.jpg", "Oppo.jpg", "Nokia.jpg", "Huawei.jpg", "Xiaomi.png",
-		"Realme.png", "Vivo.jpg", "Philips.jpg", "Mobell.jpg", "Mobiistar.jpg", "Itel.jpg",
-		"Coolpad.png", "HTC.jpg", "Motorola.jpg"
-	];
+	var company = ["Apple.jpg", "Samsung.jpg", "Xiaomi.png", "Oppo.jpg", "Vivo.jpg", "ASUS.svg", "Honor.svg", "Nothing.svg", "Motorola.jpg"];
 	for (var c of company) addCompany("img/company/" + c, c.slice(0, c.length - 4));
 
 	// Thêm sản phẩm vào trang
@@ -54,25 +51,27 @@ window.onload = function () {
 
 		// Các màu
 		var yellow_red = ['#ff9c00', '#ec1f1f'];
-		var blue = ['#42bcf4', '#004c70'];
-		var green = ['#5de272', '#007012'];
+		var blue = ['#2563eb', '#0f766e'];
+		var green = ['#16a34a', '#0f766e'];
+		var purple = ['#7c3aed', '#2563eb'];
 
 		// Thêm các khung sản phẩm
 		var div = document.getElementsByClassName('contain-khungSanPham')[0];
 		addKhungSanPham('NỔI BẬT NHẤT', yellow_red, ['star=3', 'sort=rateCount-decrease'], soLuong, div);
 		addKhungSanPham('SẢN PHẨM MỚI', blue, ['promo=moiramat', 'sort=rateCount-decrease'], soLuong, div);
-		addKhungSanPham('TRẢ GÓP 0%', yellow_red, ['promo=tragop', 'sort=rateCount-decrease'], soLuong, div);
+		addKhungSanPham('MÁY GẬP & CAO CẤP', purple, ['price=24000000-0', 'sort=price-decrease'], soLuong, div);
+		addKhungSanPham('TRẢ GÓP 0%', blue, ['promo=tragop', 'sort=rateCount-decrease'], soLuong, div);
 		addKhungSanPham('GIÁ SỐC ONLINE', green, ['promo=giareonline', 'sort=rateCount-decrease'], soLuong, div);
 		addKhungSanPham('GIẢM GIÁ LỚN', yellow_red, ['promo=giamgia'], soLuong, div);
-		addKhungSanPham('GIÁ RẺ CHO MỌI NHÀ', green, ['price=0-3000000', 'sort=price'], soLuong, div);
+		addKhungSanPham('TẦM TRUNG ĐÁNG MUA', green, ['price=8000000-16000000', 'sort=price'], soLuong, div);
 	}
 
 	// Thêm chọn mức giá
-	addPricesRange(0, 2000000);
-	addPricesRange(2000000, 4000000);
-	addPricesRange(4000000, 7000000);
-	addPricesRange(7000000, 13000000);
-	addPricesRange(13000000, 0);
+	addPricesRange(0, 10000000);
+	addPricesRange(10000000, 16000000);
+	addPricesRange(16000000, 24000000);
+	addPricesRange(24000000, 32000000);
+	addPricesRange(32000000, 0);
 
 	// Thêm chọn khuyến mãi
 	addPromotion('giamgia');

@@ -1,0 +1,6 @@
+.DS_Store
+*_backup_*
+img/*_backup_*
+data/*_backup_*.js
+img/products/modern/product-grid-source*.png
+img/products/ip17promax.png

@@ -28,7 +28,7 @@
         window.onload = function () {
             khoiTao();
             // thêm tags (từ khóa) vào khung tìm kiếm
-            var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+            var tags = ["Apple", "Samsung", "Xiaomi", "OPPO", "vivo"];
             for (var t of tags) addTags(t, "index.html?search=" + t);
         }
     </script>
@@ -38,34 +38,60 @@
 <body>
     <script> addTopNav();</script>
 
-    <section style="min-height: 85vh">
+    <section class="page-section">
         <script> addHeader(); </script>
 
         <div class="page-gt">
-            <h4 class="page-header">
-                Giới thiệu
-            </h4>
+            <div class="about-hero">
+                <div class="about-hero-content">
+                    <span class="about-eyebrow">PGH Store</span>
+                    <h1>Điện thoại chính hãng, tư vấn rõ ràng, mua sắm yên tâm.</h1>
+                    <p>PGH Store tập trung vào trải nghiệm chọn mua điện thoại đơn giản, minh bạch và đáng tin cậy cho mọi khách hàng.</p>
+                </div>
+                <div class="about-brand-card">
+                    <img src="img/logo.jpg" alt="PGH Store">
+                    <span>Modern phone store</span>
+                </div>
+            </div>
+
+            <div class="about-stats">
+                <div>
+                    <strong>10+</strong>
+                    <span>Năm kinh nghiệm</span>
+                </div>
+                <div>
+                    <strong>100%</strong>
+                    <span>Sản phẩm chính hãng</span>
+                </div>
+                <div>
+                    <strong>1h</strong>
+                    <span>Giao nhanh nội thành</span>
+                </div>
+            </div>
+
             <div class="page-info">
-                <p>Được thành lập từ năm 1996, chúng tôi là một trong những nhà phân phối ĐTDĐ đầu tiên tại Hà Nội và
-                    kể từ năm 2000, chúng tôi chính thức trở thành nhà phân phối ĐTDĐ SamSung – Masterdealer duy nhất
-                    tại 194 đường Lê Duẩn.
-                </p>
-                <br />
-                <p>
-                    Với bề dày gần 10 năm kinh nghiệm và uy tín đã tạo được trong những năm vừa qua, chúng tôi luôn đem
-                    lại cho khách hàng sự hài lòng và thỏa mãn với tất cả các sản phẩm của mình.<br />
-                    Bên cạnh đó là đội ngũ nhân viên nhiệt tình chu đáo và đầy kinh nghiệm của chúng tôi luôn đưa được
-                    ra cho khách hàng những thông tin có giá trị và giúp khách hàng lựa chọn được những sản phẩm phù
-                    hợp nhất.<br />
-                    Để nâng cao thương hiệu của mình, mục tiêu của chúng tôi trong thời gian tới là cung cấp đến tận
-                    tay khách hàng những sản phẩm chính hãng với chất lượng đảm bảo và uy tín cũng như giá cả hợp lý
-                    nhất.<br />
-                    Chúng tôi mong muốn sự đóng góp của khách hàng sẽ giúp chúng tôi ngày một phát triển để từ đó củng
-                    cố thêm lòng tin của khách hàng với chúng tôi. Chúng tôi rất biết ơn sự tin tưởng của khách hàng
-                    trong suốt gần 10 năm qua và chúng tôi luôn tâm niệm rằng cần phải cố gắng hơn nữa để xứng đáng với
-                    phương châm đề ra “Nếu những gì chúng tôi không có, nghĩa là bạn không cần .<br />
-                    Chúng tôi xin chân thành cảm ơn tất cả các khách hàng đã, đang và sẽ ủng hộ chúng tôi.
-                </p>
+                <h2>Về chúng tôi</h2>
+                <p>Được thành lập từ năm 1996, chúng tôi là một trong những nhà phân phối điện thoại di động đầu tiên tại Hà Nội. Từ năm 2000, cửa hàng chính thức trở thành nhà phân phối điện thoại Samsung tại 194 đường Lê Duẩn.</p>
+                <p>Với kinh nghiệm và uy tín đã xây dựng trong nhiều năm, chúng tôi luôn hướng tới việc mang lại cho khách hàng sự hài lòng thông qua sản phẩm chất lượng, tư vấn dễ hiểu và giá cả hợp lý.</p>
+                <p>Đội ngũ PGH Store luôn sẵn sàng hỗ trợ khách hàng chọn được sản phẩm phù hợp với nhu cầu sử dụng, ngân sách và thói quen công nghệ hằng ngày.</p>
+            </div>
+
+            <div class="about-values">
+                <div>
+                    <i class="fa fa-shield"></i>
+                    <h3>Uy tín</h3>
+                    <p>Thông tin sản phẩm minh bạch, chính sách bảo hành rõ ràng.</p>
+                </div>
+                <div>
+                    <i class="fa fa-mobile"></i>
+                    <h3>Chọn lọc</h3>
+                    <p>Danh mục điện thoại được cập nhật theo nhu cầu thực tế của người dùng.</p>
+                </div>
+                <div>
+                    <i class="fa fa-headphones"></i>
+                    <h3>Hỗ trợ</h3>
+                    <p>Tư vấn trước và sau bán hàng để khách hàng dùng máy thoải mái hơn.</p>
+                </div>
             </div>
         </div>
     </section>

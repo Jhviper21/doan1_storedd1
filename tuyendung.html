@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
@@ -28,7 +28,7 @@
         window.onload = function () {
             khoiTao();
             // thêm tags (từ khóa) vào khung tìm kiếm
-            var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+            var tags = ["Apple", "Samsung", "Xiaomi", "OPPO", "vivo"];
             for (var t of tags) addTags(t, "index.html?search=" + t);
         }
     </script>
@@ -38,15 +38,36 @@
 <body>
     <script> addTopNav();</script>
 
-    <section style="min-height: 85vh">
+    <section class="page-section">
         <script> addHeader(); </script>
 
         <div class="body-tuyendung">
-            <div class="tuyendung-header">Tuyển dụng</div>
+            <div class="tuyendung-header">
+                <span>Careers</span>
+                <h1>Tuyển dụng tại PGH Store</h1>
+                <p>Cùng xây dựng trải nghiệm mua sắm điện thoại chuyên nghiệp, thân thiện và đáng tin cậy.</p>
+            </div>
+            <div class="job-summary">
+                <div>
+                    <i class="fa fa-briefcase"></i>
+                    <strong>Nhân viên bán hàng</strong>
+                    <span>Vị trí tuyển dụng</span>
+                </div>
+                <div>
+                    <i class="fa fa-clock-o"></i>
+                    <strong>18h - 21h30</strong>
+                    <span>Ca làm việc</span>
+                </div>
+                <div>
+                    <i class="fa fa-users"></i>
+                    <strong>02</strong>
+                    <span>Số lượng cần tuyển</span>
+                </div>
+            </div>
             <div class="tuyendung-info">
-                <h1 class="tieude">NHÂN VIÊN BÁN HÀNG</h1><br/>
+                <h1 class="tieude">NHÂN VIÊN BÁN HÀNG</h1>
 
-                <b>1.MÔ TẢ</b>
+                <b>1. MÔ TẢ</b>
                 <ul class="tuyendung-noidung">
                     <li>Vui vẻ, lịch sự chào đón khi khách vào cửa hàng.</li>
                     <li>
@@ -56,18 +77,18 @@
                     <li>Nắm bắt, cập nhật thông tin, tính năng của sản phẩm mới: form sản phẩm, chất liệu, màu sắc, kiểu dáng...</li>
                 </ul>
 
-                <b>2.THỜI GIAN LÀM VIỆC</b>
+                <b>2. THỜI GIAN LÀM VIỆC</b>
                 <ul class="tuyendung-noidung">
                     <li><span>Từ 18h – 21h30 các ngày trong tuần</span></li>
                     <li>Nghỉ 3 ngày/ tháng</li>
                 </ul>
 
-                <b>3.ĐỊA ĐIỂM LÀM VIỆC</b>
+                <b>3. ĐỊA ĐIỂM LÀM VIỆC</b>
                 <ul class="tuyendung-noidung">
-                    <span>Thủ Lễ,Quảng Phước,Quảng Điền,Thừa Thiên Huế</span>
+                    <li><span>Thủ Lễ, Quảng Phước, Quảng Điền, Thừa Thiên Huế</span></li>
                 </ul>
 
-                <b>4.YÊU CẦU</b>
+                <b>4. YÊU CẦU</b>
                 <ul class="tuyendung-noidung">
                     <li>Nam/Nữ, tuổi từ 18 - 25.</li>
                     <li>Ngoại hình khá, thân thiện, niềm nở.</li>
@@ -77,7 +98,7 @@
                     <li><span>Số lượng cần tuyển: 02</span></li>
                 </ul>
 
-                <b>5.QUYỀN LỢI</b>
+                <b>5. QUYỀN LỢI</b>
                 <ul class="tuyendung-noidung">
                     <li>Thu nhập: <span>3.000.000 - 4.000.000 VNĐ/tháng.</span></li>
                     <li>Hoa hồng hưởng theo doanh thu bán hàng của cửa hàng.</li>
@@ -88,16 +109,20 @@
                     <li>Được tiếp xúc với những sản phẩm công nghệ mới nhất hiện nay.</li>
                 </ul>
 
-                <b>6.LIÊN HỆ</b>
+                <b>6. LIÊN HỆ</b>
                 <ul class="tuyendung-noidung">
                     <li>Ứng viên điền thông tin theo link: 
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdNjF8wP7v7ocBDVRUFGqRCHrV0lNPky33Sn3GXVgSVYe7dMA/viewform" target="_blank">
                             <span>Tuyển dụng</span>
                         </a>
                     </li>
-                    <li>Hoặc nộp hồ sơ trực tiếp tại <b>Phòng Hành chính nhân sự - TT VIệt Hàn, Trần Đại Nghĩa, Đà Nẵng.</b></li>
-                    <li>Hoặc gửi CV qua email:<b> hoanggia212003@gmail.com</b></li>
+                    <li>Hoặc nộp hồ sơ trực tiếp tại <b>PGH Store - Thủ Lễ, Quảng Điền, Thừa Thiên Huế.</b></li>
+                    <li>Hoặc gửi CV qua email: <b>hoanggia212003@gmail.com</b></li>
                 </ul>
+                <a class="apply-button" href="https://docs.google.com/forms/d/e/1FAIpQLSdNjF8wP7v7ocBDVRUFGqRCHrV0lNPky33Sn3GXVgSVYe7dMA/viewform" target="_blank">
+                    <i class="fa fa-paper-plane"></i>
+                    Ứng tuyển ngay
+                </a>
             </div>
         </div>
 
